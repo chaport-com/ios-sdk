@@ -1,0 +1,80 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.1 (swiftlang-6.1.0.110.21 clang-1700.0.13.3)
+// swift-module-flags: -target arm64-apple-ios12.0 -enable-objc-interop -enable-library-evolution -swift-version 6 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -module-name ChaportSDK
+// swift-module-flags-ignorable:  -interface-compiler-version 6.1
+import CommonCrypto
+import Foundation
+import Swift
+import UIKit
+import UserNotifications
+import WebKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+public protocol ChaportSDKDelegate : AnyObject {
+  func chatDidStart()
+  func chatDidPresent()
+  func chatDidDismiss()
+  func chatDidFail(error: any Swift.Error)
+  func unreadMessageDidChange(unreadCount: Swift.Int, lastMessage: Swift.String?)
+  func linkDidClick(url: Foundation.URL)
+}
+public struct VisitorData {
+  public let name: Swift.String
+  public let email: Swift.String
+  public let custom: [Swift.String : Any]
+  public init(name: Swift.String, email: Swift.String, custom: [Swift.String : Any])
+}
+public enum ChaportSDKError : Swift.Error {
+  case webViewNotLoaded
+  case invalidResponse
+  case unknown
+  case chatDenied(payload: [Swift.String : Swift.String]?)
+}
+@objc @_inheritsConvenienceInitializers public class Chaport : ObjectiveC.NSObject, UserNotifications.UNUserNotificationCenterDelegate {
+  @_Concurrency.MainActor public static let shared: ChaportSDK.Chaport
+  weak public var delegate: (any ChaportSDK.ChaportSDKDelegate)?
+  public func configure(config: ChaportSDK.Config)
+  public func setLanguage(languageCode: Swift.String)
+  @_Concurrency.MainActor public func stopSession(clearCache: Swift.Bool = true)
+  @_Concurrency.MainActor public func setVisitorData(visitor: ChaportSDK.VisitorData)
+  @_Concurrency.MainActor public func present(from viewController: UIKit.UIViewController)
+  @_Concurrency.MainActor public func embed(into containerView: UIKit.UIView, parentViewController: UIKit.UIViewController)
+  @_Concurrency.MainActor public func dismiss()
+  @_Concurrency.MainActor public func remove()
+  @_Concurrency.MainActor public func setDeviceToken(deviceToken: Swift.String)
+  public func isChaportPushNotification(notification: UserNotifications.UNNotificationRequest) -> Swift.Bool
+  @_Concurrency.MainActor public func handlePushNotification(notification: UserNotifications.UNNotificationRequest)
+  @_Concurrency.MainActor public func isChatVisible() -> Swift.Bool
+  @_Concurrency.MainActor public func canStartBot() -> Swift.Bool
+  public func parseChaportPush(from userInfo: [Swift.AnyHashable : Any]) -> ChaportSDK.ChaportPushPayload?
+  @_Concurrency.MainActor public func showInAppBanner(operatorName: Swift.String, operatorPhotoURL: Swift.String, message: Swift.String, tapAction: @escaping () -> Swift.Void)
+  @_Concurrency.MainActor public func topMostViewController(from root: UIKit.UIViewController) -> UIKit.UIViewController
+  @_Concurrency.MainActor public func startBot(botId: Swift.String)
+  @_Concurrency.MainActor public func canStartBot(botId: Swift.String? = nil, completion: @escaping (Swift.Bool) -> Swift.Void)
+  @_Concurrency.MainActor public func openFAQ()
+  @_Concurrency.MainActor public func openFAQArticle(articleSlug: Swift.String)
+  @_Concurrency.MainActor public func getUnreadMessage(completion: @escaping (Swift.String?, Swift.Int) -> Swift.Void)
+  @_Concurrency.MainActor public func sendMessageToWebView(message: [Swift.String : Any], completion: @escaping (Swift.Result<Any?, any Swift.Error>) -> Swift.Void)
+  @objc override dynamic public init()
+  @objc deinit
+}
+public struct Config {
+  public let appId: Swift.String
+  public let session: [Swift.String : Any]
+  public let region: Swift.String?
+  public init(appId: Swift.String, session: [Swift.String : Any], region: Swift.String? = nil)
+}
+public struct ChaportPushOperator : Swift.Codable {
+  public let id: Swift.String
+  public let name: Swift.String
+  public let image: Swift.String
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct ChaportPushPayload : Swift.Codable {
+  public let `operator`: ChaportSDK.ChaportPushOperator
+  public let message: Swift.String?
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}

@@ -1,0 +1,2489 @@
+{
+  "ABIRoot": {
+    "kind": "Root",
+    "name": "ChaportSDK",
+    "printedName": "ChaportSDK",
+    "children": [
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "ChaportSDK"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "Config",
+        "printedName": "Config",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "appId",
+            "printedName": "appId",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10ChaportSDK6ConfigV5appIdSSvp",
+            "mangledName": "$s10ChaportSDK6ConfigV5appIdSSvp",
+            "moduleName": "ChaportSDK",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10ChaportSDK6ConfigV5appIdSSvg",
+                "mangledName": "$s10ChaportSDK6ConfigV5appIdSSvg",
+                "moduleName": "ChaportSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "session",
+            "printedName": "session",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Dictionary",
+                "printedName": "[Swift.String : Any]",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ProtocolComposition",
+                    "printedName": "Any"
+                  }
+                ],
+                "usr": "s:SD"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10ChaportSDK6ConfigV7sessionSDySSypGvp",
+            "mangledName": "$s10ChaportSDK6ConfigV7sessionSDySSypGvp",
+            "moduleName": "ChaportSDK",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Dictionary",
+                    "printedName": "[Swift.String : Any]",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "ProtocolComposition",
+                        "printedName": "Any"
+                      }
+                    ],
+                    "usr": "s:SD"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10ChaportSDK6ConfigV7sessionSDySSypGvg",
+                "mangledName": "$s10ChaportSDK6ConfigV7sessionSDySSypGvg",
+                "moduleName": "ChaportSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "region",
+            "printedName": "region",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10ChaportSDK6ConfigV6regionSSSgvp",
+            "mangledName": "$s10ChaportSDK6ConfigV6regionSSSgvp",
+            "moduleName": "ChaportSDK",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Swift.String?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10ChaportSDK6ConfigV6regionSSSgvg",
+                "mangledName": "$s10ChaportSDK6ConfigV6regionSSSgvg",
+                "moduleName": "ChaportSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(appId:session:region:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Config",
+                "printedName": "ChaportSDK.Config",
+                "usr": "s:10ChaportSDK6ConfigV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Dictionary",
+                "printedName": "[Swift.String : Any]",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ProtocolComposition",
+                    "printedName": "Any"
+                  }
+                ],
+                "usr": "s:SD"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:10ChaportSDK6ConfigV5appId7session6regionACSS_SDySSypGSSSgtcfc",
+            "mangledName": "$s10ChaportSDK6ConfigV5appId7session6regionACSS_SDySSypGSSSgtcfc",
+            "moduleName": "ChaportSDK",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "init_kind": "Designated"
+          }
+        ],
+        "declKind": "Struct",
+        "usr": "s:10ChaportSDK6ConfigV",
+        "mangledName": "$s10ChaportSDK6ConfigV",
+        "moduleName": "ChaportSDK",
+        "declAttributes": [
+          "AccessControl"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "ChaportSDK"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "ChaportPushOperator",
+        "printedName": "ChaportPushOperator",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "id",
+            "printedName": "id",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10ChaportSDK0A12PushOperatorV2idSSvp",
+            "mangledName": "$s10ChaportSDK0A12PushOperatorV2idSSvp",
+            "moduleName": "ChaportSDK",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10ChaportSDK0A12PushOperatorV2idSSvg",
+                "mangledName": "$s10ChaportSDK0A12PushOperatorV2idSSvg",
+                "moduleName": "ChaportSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "name",
+            "printedName": "name",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10ChaportSDK0A12PushOperatorV4nameSSvp",
+            "mangledName": "$s10ChaportSDK0A12PushOperatorV4nameSSvp",
+            "moduleName": "ChaportSDK",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10ChaportSDK0A12PushOperatorV4nameSSvg",
+                "mangledName": "$s10ChaportSDK0A12PushOperatorV4nameSSvg",
+                "moduleName": "ChaportSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "image",
+            "printedName": "image",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10ChaportSDK0A12PushOperatorV5imageSSvp",
+            "mangledName": "$s10ChaportSDK0A12PushOperatorV5imageSSvp",
+            "moduleName": "ChaportSDK",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10ChaportSDK0A12PushOperatorV5imageSSvg",
+                "mangledName": "$s10ChaportSDK0A12PushOperatorV5imageSSvg",
+                "moduleName": "ChaportSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(from:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "ChaportPushOperator",
+                "printedName": "ChaportSDK.ChaportPushOperator",
+                "usr": "s:10ChaportSDK0A12PushOperatorV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Decoder",
+                "printedName": "any Swift.Decoder",
+                "usr": "s:s7DecoderP"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:10ChaportSDK0A12PushOperatorV4fromACs7Decoder_p_tKcfc",
+            "mangledName": "$s10ChaportSDK0A12PushOperatorV4fromACs7Decoder_p_tKcfc",
+            "moduleName": "ChaportSDK",
+            "implicit": true,
+            "throwing": true,
+            "init_kind": "Designated"
+          },
+          {
+            "kind": "Function",
+            "name": "encode",
+            "printedName": "encode(to:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Encoder",
+                "printedName": "any Swift.Encoder",
+                "usr": "s:s7EncoderP"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10ChaportSDK0A12PushOperatorV6encode2toys7Encoder_p_tKF",
+            "mangledName": "$s10ChaportSDK0A12PushOperatorV6encode2toys7Encoder_p_tKF",
+            "moduleName": "ChaportSDK",
+            "implicit": true,
+            "throwing": true,
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Struct",
+        "usr": "s:10ChaportSDK0A12PushOperatorV",
+        "mangledName": "$s10ChaportSDK0A12PushOperatorV",
+        "moduleName": "ChaportSDK",
+        "declAttributes": [
+          "AccessControl"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Decodable",
+            "printedName": "Decodable",
+            "usr": "s:Se",
+            "mangledName": "$sSe"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Encodable",
+            "printedName": "Encodable",
+            "usr": "s:SE",
+            "mangledName": "$sSE"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "ChaportPushPayload",
+        "printedName": "ChaportPushPayload",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "operator",
+            "printedName": "operator",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "ChaportPushOperator",
+                "printedName": "ChaportSDK.ChaportPushOperator",
+                "usr": "s:10ChaportSDK0A12PushOperatorV"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10ChaportSDK0A11PushPayloadV8operatorAA0aC8OperatorVvp",
+            "mangledName": "$s10ChaportSDK0A11PushPayloadV8operatorAA0aC8OperatorVvp",
+            "moduleName": "ChaportSDK",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ChaportPushOperator",
+                    "printedName": "ChaportSDK.ChaportPushOperator",
+                    "usr": "s:10ChaportSDK0A12PushOperatorV"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10ChaportSDK0A11PushPayloadV8operatorAA0aC8OperatorVvg",
+                "mangledName": "$s10ChaportSDK0A11PushPayloadV8operatorAA0aC8OperatorVvg",
+                "moduleName": "ChaportSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "message",
+            "printedName": "message",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10ChaportSDK0A11PushPayloadV7messageSSSgvp",
+            "mangledName": "$s10ChaportSDK0A11PushPayloadV7messageSSSgvp",
+            "moduleName": "ChaportSDK",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Swift.String?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10ChaportSDK0A11PushPayloadV7messageSSSgvg",
+                "mangledName": "$s10ChaportSDK0A11PushPayloadV7messageSSSgvg",
+                "moduleName": "ChaportSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(from:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "ChaportPushPayload",
+                "printedName": "ChaportSDK.ChaportPushPayload",
+                "usr": "s:10ChaportSDK0A11PushPayloadV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Decoder",
+                "printedName": "any Swift.Decoder",
+                "usr": "s:s7DecoderP"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:10ChaportSDK0A11PushPayloadV4fromACs7Decoder_p_tKcfc",
+            "mangledName": "$s10ChaportSDK0A11PushPayloadV4fromACs7Decoder_p_tKcfc",
+            "moduleName": "ChaportSDK",
+            "implicit": true,
+            "throwing": true,
+            "init_kind": "Designated"
+          },
+          {
+            "kind": "Function",
+            "name": "encode",
+            "printedName": "encode(to:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Encoder",
+                "printedName": "any Swift.Encoder",
+                "usr": "s:s7EncoderP"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10ChaportSDK0A11PushPayloadV6encode2toys7Encoder_p_tKF",
+            "mangledName": "$s10ChaportSDK0A11PushPayloadV6encode2toys7Encoder_p_tKF",
+            "moduleName": "ChaportSDK",
+            "implicit": true,
+            "throwing": true,
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Struct",
+        "usr": "s:10ChaportSDK0A11PushPayloadV",
+        "mangledName": "$s10ChaportSDK0A11PushPayloadV",
+        "moduleName": "ChaportSDK",
+        "declAttributes": [
+          "AccessControl"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Decodable",
+            "printedName": "Decodable",
+            "usr": "s:Se",
+            "mangledName": "$sSe"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Encodable",
+            "printedName": "Encodable",
+            "usr": "s:SE",
+            "mangledName": "$sSE"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "ChaportSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "WebKit",
+        "printedName": "WebKit",
+        "declKind": "Import",
+        "moduleName": "ChaportSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "ChaportSDK"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "ChaportSDKDelegate",
+        "printedName": "ChaportSDKDelegate",
+        "children": [
+          {
+            "kind": "Function",
+            "name": "chatDidStart",
+            "printedName": "chatDidStart()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10ChaportSDK0A11SDKDelegateP12chatDidStartyyF",
+            "mangledName": "$s10ChaportSDK0A11SDKDelegateP12chatDidStartyyF",
+            "moduleName": "ChaportSDK",
+            "genericSig": "<τ_0_0 where τ_0_0 : ChaportSDK.ChaportSDKDelegate>",
+            "sugared_genericSig": "<Self where Self : ChaportSDK.ChaportSDKDelegate>",
+            "protocolReq": true,
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "chatDidPresent",
+            "printedName": "chatDidPresent()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10ChaportSDK0A11SDKDelegateP14chatDidPresentyyF",
+            "mangledName": "$s10ChaportSDK0A11SDKDelegateP14chatDidPresentyyF",
+            "moduleName": "ChaportSDK",
+            "genericSig": "<τ_0_0 where τ_0_0 : ChaportSDK.ChaportSDKDelegate>",
+            "sugared_genericSig": "<Self where Self : ChaportSDK.ChaportSDKDelegate>",
+            "protocolReq": true,
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "chatDidDismiss",
+            "printedName": "chatDidDismiss()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10ChaportSDK0A11SDKDelegateP14chatDidDismissyyF",
+            "mangledName": "$s10ChaportSDK0A11SDKDelegateP14chatDidDismissyyF",
+            "moduleName": "ChaportSDK",
+            "genericSig": "<τ_0_0 where τ_0_0 : ChaportSDK.ChaportSDKDelegate>",
+            "sugared_genericSig": "<Self where Self : ChaportSDK.ChaportSDKDelegate>",
+            "protocolReq": true,
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "chatDidFail",
+            "printedName": "chatDidFail(error:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Error",
+                "printedName": "any Swift.Error",
+                "usr": "s:s5ErrorP"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10ChaportSDK0A11SDKDelegateP11chatDidFail5errorys5Error_p_tF",
+            "mangledName": "$s10ChaportSDK0A11SDKDelegateP11chatDidFail5errorys5Error_p_tF",
+            "moduleName": "ChaportSDK",
+            "genericSig": "<τ_0_0 where τ_0_0 : ChaportSDK.ChaportSDKDelegate>",
+            "sugared_genericSig": "<Self where Self : ChaportSDK.ChaportSDKDelegate>",
+            "protocolReq": true,
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "unreadMessageDidChange",
+            "printedName": "unreadMessageDidChange(unreadCount:lastMessage:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10ChaportSDK0A11SDKDelegateP22unreadMessageDidChange0D5Count04lastE0ySi_SSSgtF",
+            "mangledName": "$s10ChaportSDK0A11SDKDelegateP22unreadMessageDidChange0D5Count04lastE0ySi_SSSgtF",
+            "moduleName": "ChaportSDK",
+            "genericSig": "<τ_0_0 where τ_0_0 : ChaportSDK.ChaportSDKDelegate>",
+            "sugared_genericSig": "<Self where Self : ChaportSDK.ChaportSDKDelegate>",
+            "protocolReq": true,
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "linkDidClick",
+            "printedName": "linkDidClick(url:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "URL",
+                "printedName": "Foundation.URL",
+                "usr": "s:10Foundation3URLV"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10ChaportSDK0A11SDKDelegateP12linkDidClick3urly10Foundation3URLV_tF",
+            "mangledName": "$s10ChaportSDK0A11SDKDelegateP12linkDidClick3urly10Foundation3URLV_tF",
+            "moduleName": "ChaportSDK",
+            "genericSig": "<τ_0_0 where τ_0_0 : ChaportSDK.ChaportSDKDelegate>",
+            "sugared_genericSig": "<Self where Self : ChaportSDK.ChaportSDKDelegate>",
+            "protocolReq": true,
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Protocol",
+        "usr": "s:10ChaportSDK0A11SDKDelegateP",
+        "mangledName": "$s10ChaportSDK0A11SDKDelegateP",
+        "moduleName": "ChaportSDK",
+        "genericSig": "<τ_0_0 : AnyObject>",
+        "sugared_genericSig": "<Self : AnyObject>",
+        "declAttributes": [
+          "AccessControl"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "ChaportSDK"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "VisitorData",
+        "printedName": "VisitorData",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "name",
+            "printedName": "name",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10ChaportSDK11VisitorDataV4nameSSvp",
+            "mangledName": "$s10ChaportSDK11VisitorDataV4nameSSvp",
+            "moduleName": "ChaportSDK",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10ChaportSDK11VisitorDataV4nameSSvg",
+                "mangledName": "$s10ChaportSDK11VisitorDataV4nameSSvg",
+                "moduleName": "ChaportSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "email",
+            "printedName": "email",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10ChaportSDK11VisitorDataV5emailSSvp",
+            "mangledName": "$s10ChaportSDK11VisitorDataV5emailSSvp",
+            "moduleName": "ChaportSDK",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10ChaportSDK11VisitorDataV5emailSSvg",
+                "mangledName": "$s10ChaportSDK11VisitorDataV5emailSSvg",
+                "moduleName": "ChaportSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "custom",
+            "printedName": "custom",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Dictionary",
+                "printedName": "[Swift.String : Any]",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ProtocolComposition",
+                    "printedName": "Any"
+                  }
+                ],
+                "usr": "s:SD"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10ChaportSDK11VisitorDataV6customSDySSypGvp",
+            "mangledName": "$s10ChaportSDK11VisitorDataV6customSDySSypGvp",
+            "moduleName": "ChaportSDK",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Dictionary",
+                    "printedName": "[Swift.String : Any]",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "ProtocolComposition",
+                        "printedName": "Any"
+                      }
+                    ],
+                    "usr": "s:SD"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10ChaportSDK11VisitorDataV6customSDySSypGvg",
+                "mangledName": "$s10ChaportSDK11VisitorDataV6customSDySSypGvg",
+                "moduleName": "ChaportSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(name:email:custom:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "VisitorData",
+                "printedName": "ChaportSDK.VisitorData",
+                "usr": "s:10ChaportSDK11VisitorDataV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Dictionary",
+                "printedName": "[Swift.String : Any]",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ProtocolComposition",
+                    "printedName": "Any"
+                  }
+                ],
+                "usr": "s:SD"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:10ChaportSDK11VisitorDataV4name5email6customACSS_SSSDySSypGtcfc",
+            "mangledName": "$s10ChaportSDK11VisitorDataV4name5email6customACSS_SSSDySSypGtcfc",
+            "moduleName": "ChaportSDK",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "init_kind": "Designated"
+          }
+        ],
+        "declKind": "Struct",
+        "usr": "s:10ChaportSDK11VisitorDataV",
+        "mangledName": "$s10ChaportSDK11VisitorDataV",
+        "moduleName": "ChaportSDK",
+        "declAttributes": [
+          "AccessControl"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "ChaportSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "WebKit",
+        "printedName": "WebKit",
+        "declKind": "Import",
+        "moduleName": "ChaportSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "ChaportSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "UserNotifications",
+        "printedName": "UserNotifications",
+        "declKind": "Import",
+        "moduleName": "ChaportSDK"
+      },
+      {
+        "kind": "Import",
+        "name": "CommonCrypto",
+        "printedName": "CommonCrypto",
+        "declKind": "Import",
+        "moduleName": "ChaportSDK"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "ChaportSDKError",
+        "printedName": "ChaportSDKError",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "webViewNotLoaded",
+            "printedName": "webViewNotLoaded",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(ChaportSDK.ChaportSDKError.Type) -> ChaportSDK.ChaportSDKError",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ChaportSDKError",
+                    "printedName": "ChaportSDK.ChaportSDKError",
+                    "usr": "s:10ChaportSDK0A8SDKErrorO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "ChaportSDK.ChaportSDKError.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "ChaportSDKError",
+                        "printedName": "ChaportSDK.ChaportSDKError",
+                        "usr": "s:10ChaportSDK0A8SDKErrorO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:10ChaportSDK0A8SDKErrorO16webViewNotLoadedyA2CmF",
+            "mangledName": "$s10ChaportSDK0A8SDKErrorO16webViewNotLoadedyA2CmF",
+            "moduleName": "ChaportSDK"
+          },
+          {
+            "kind": "Var",
+            "name": "invalidResponse",
+            "printedName": "invalidResponse",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(ChaportSDK.ChaportSDKError.Type) -> ChaportSDK.ChaportSDKError",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ChaportSDKError",
+                    "printedName": "ChaportSDK.ChaportSDKError",
+                    "usr": "s:10ChaportSDK0A8SDKErrorO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "ChaportSDK.ChaportSDKError.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "ChaportSDKError",
+                        "printedName": "ChaportSDK.ChaportSDKError",
+                        "usr": "s:10ChaportSDK0A8SDKErrorO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:10ChaportSDK0A8SDKErrorO15invalidResponseyA2CmF",
+            "mangledName": "$s10ChaportSDK0A8SDKErrorO15invalidResponseyA2CmF",
+            "moduleName": "ChaportSDK"
+          },
+          {
+            "kind": "Var",
+            "name": "unknown",
+            "printedName": "unknown",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(ChaportSDK.ChaportSDKError.Type) -> ChaportSDK.ChaportSDKError",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ChaportSDKError",
+                    "printedName": "ChaportSDK.ChaportSDKError",
+                    "usr": "s:10ChaportSDK0A8SDKErrorO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "ChaportSDK.ChaportSDKError.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "ChaportSDKError",
+                        "printedName": "ChaportSDK.ChaportSDKError",
+                        "usr": "s:10ChaportSDK0A8SDKErrorO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:10ChaportSDK0A8SDKErrorO7unknownyA2CmF",
+            "mangledName": "$s10ChaportSDK0A8SDKErrorO7unknownyA2CmF",
+            "moduleName": "ChaportSDK"
+          },
+          {
+            "kind": "Var",
+            "name": "chatDenied",
+            "printedName": "chatDenied",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(ChaportSDK.ChaportSDKError.Type) -> ([Swift.String : Swift.String]?) -> ChaportSDK.ChaportSDKError",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "([Swift.String : Swift.String]?) -> ChaportSDK.ChaportSDKError",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "ChaportSDKError",
+                        "printedName": "ChaportSDK.ChaportSDKError",
+                        "usr": "s:10ChaportSDK0A8SDKErrorO"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Tuple",
+                        "printedName": "(payload: [Swift.String : Swift.String]?)",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Optional",
+                            "printedName": "[Swift.String : Swift.String]?",
+                            "children": [
+                              {
+                                "kind": "TypeNominal",
+                                "name": "Dictionary",
+                                "printedName": "[Swift.String : Swift.String]",
+                                "children": [
+                                  {
+                                    "kind": "TypeNominal",
+                                    "name": "String",
+                                    "printedName": "Swift.String",
+                                    "usr": "s:SS"
+                                  },
+                                  {
+                                    "kind": "TypeNominal",
+                                    "name": "String",
+                                    "printedName": "Swift.String",
+                                    "usr": "s:SS"
+                                  }
+                                ],
+                                "usr": "s:SD"
+                              }
+                            ],
+                            "usr": "s:Sq"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "ChaportSDK.ChaportSDKError.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "ChaportSDKError",
+                        "printedName": "ChaportSDK.ChaportSDKError",
+                        "usr": "s:10ChaportSDK0A8SDKErrorO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:10ChaportSDK0A8SDKErrorO10chatDeniedyACSDyS2SGSg_tcACmF",
+            "mangledName": "$s10ChaportSDK0A8SDKErrorO10chatDeniedyACSDyS2SGSg_tcACmF",
+            "moduleName": "ChaportSDK"
+          }
+        ],
+        "declKind": "Enum",
+        "usr": "s:10ChaportSDK0A8SDKErrorO",
+        "mangledName": "$s10ChaportSDK0A8SDKErrorO",
+        "moduleName": "ChaportSDK",
+        "declAttributes": [
+          "AccessControl"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Error",
+            "printedName": "Error",
+            "usr": "s:s5ErrorP",
+            "mangledName": "$ss5ErrorP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "Chaport",
+        "printedName": "Chaport",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "shared",
+            "printedName": "shared",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Chaport",
+                "printedName": "ChaportSDK.Chaport",
+                "usr": "c:@M@ChaportSDK@objc(cs)Chaport"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10ChaportSDK0A0C6sharedACvpZ",
+            "mangledName": "$s10ChaportSDK0A0C6sharedACvpZ",
+            "moduleName": "ChaportSDK",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage",
+              "AccessControl",
+              "Custom"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Chaport",
+                    "printedName": "ChaportSDK.Chaport",
+                    "usr": "c:@M@ChaportSDK@objc(cs)Chaport"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10ChaportSDK0A0C6sharedACvgZ",
+                "mangledName": "$s10ChaportSDK0A0C6sharedACvgZ",
+                "moduleName": "ChaportSDK",
+                "static": true,
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "delegate",
+            "printedName": "delegate",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "WeakStorage",
+                "printedName": "(any ChaportSDK.ChaportSDKDelegate)?"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:10ChaportSDK0A0C8delegateAA0A11SDKDelegate_pSgvp",
+            "mangledName": "$s10ChaportSDK0A0C8delegateAA0A11SDKDelegate_pSgvp",
+            "moduleName": "ChaportSDK",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "ReferenceOwnership",
+              "AccessControl"
+            ],
+            "ownership": 1,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "(any ChaportSDK.ChaportSDKDelegate)?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "ChaportSDKDelegate",
+                        "printedName": "any ChaportSDK.ChaportSDKDelegate",
+                        "usr": "s:10ChaportSDK0A11SDKDelegateP"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10ChaportSDK0A0C8delegateAA0A11SDKDelegate_pSgvg",
+                "mangledName": "$s10ChaportSDK0A0C8delegateAA0A11SDKDelegate_pSgvg",
+                "moduleName": "ChaportSDK",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "(any ChaportSDK.ChaportSDKDelegate)?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "ChaportSDKDelegate",
+                        "printedName": "any ChaportSDK.ChaportSDKDelegate",
+                        "usr": "s:10ChaportSDK0A11SDKDelegateP"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10ChaportSDK0A0C8delegateAA0A11SDKDelegate_pSgvs",
+                "mangledName": "$s10ChaportSDK0A0C8delegateAA0A11SDKDelegate_pSgvs",
+                "moduleName": "ChaportSDK",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:10ChaportSDK0A0C8delegateAA0A11SDKDelegate_pSgvM",
+                "mangledName": "$s10ChaportSDK0A0C8delegateAA0A11SDKDelegate_pSgvM",
+                "moduleName": "ChaportSDK",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Function",
+            "name": "configure",
+            "printedName": "configure(config:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Config",
+                "printedName": "ChaportSDK.Config",
+                "usr": "s:10ChaportSDK6ConfigV"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10ChaportSDK0A0C9configure6configyAA6ConfigV_tF",
+            "mangledName": "$s10ChaportSDK0A0C9configure6configyAA6ConfigV_tF",
+            "moduleName": "ChaportSDK",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "setLanguage",
+            "printedName": "setLanguage(languageCode:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10ChaportSDK0A0C11setLanguage12languageCodeySS_tF",
+            "mangledName": "$s10ChaportSDK0A0C11setLanguage12languageCodeySS_tF",
+            "moduleName": "ChaportSDK",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "stopSession",
+            "printedName": "stopSession(clearCache:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "hasDefaultArg": true,
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10ChaportSDK0A0C11stopSession10clearCacheySb_tF",
+            "mangledName": "$s10ChaportSDK0A0C11stopSession10clearCacheySb_tF",
+            "moduleName": "ChaportSDK",
+            "declAttributes": [
+              "AccessControl",
+              "Custom",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "setVisitorData",
+            "printedName": "setVisitorData(visitor:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "VisitorData",
+                "printedName": "ChaportSDK.VisitorData",
+                "usr": "s:10ChaportSDK11VisitorDataV"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10ChaportSDK0A0C14setVisitorData7visitoryAA0dE0V_tF",
+            "mangledName": "$s10ChaportSDK0A0C14setVisitorData7visitoryAA0dE0V_tF",
+            "moduleName": "ChaportSDK",
+            "declAttributes": [
+              "AccessControl",
+              "Custom",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "present",
+            "printedName": "present(from:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "UIViewController",
+                "printedName": "UIKit.UIViewController",
+                "usr": "c:objc(cs)UIViewController"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10ChaportSDK0A0C7present4fromySo16UIViewControllerC_tF",
+            "mangledName": "$s10ChaportSDK0A0C7present4fromySo16UIViewControllerC_tF",
+            "moduleName": "ChaportSDK",
+            "declAttributes": [
+              "AccessControl",
+              "Custom",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "embed",
+            "printedName": "embed(into:parentViewController:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "UIView",
+                "printedName": "UIKit.UIView",
+                "usr": "c:objc(cs)UIView"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "UIViewController",
+                "printedName": "UIKit.UIViewController",
+                "usr": "c:objc(cs)UIViewController"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10ChaportSDK0A0C5embed4into20parentViewControllerySo6UIViewC_So0hG0CtF",
+            "mangledName": "$s10ChaportSDK0A0C5embed4into20parentViewControllerySo6UIViewC_So0hG0CtF",
+            "moduleName": "ChaportSDK",
+            "declAttributes": [
+              "AccessControl",
+              "Custom",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "dismiss",
+            "printedName": "dismiss()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10ChaportSDK0A0C7dismissyyF",
+            "mangledName": "$s10ChaportSDK0A0C7dismissyyF",
+            "moduleName": "ChaportSDK",
+            "declAttributes": [
+              "AccessControl",
+              "Custom",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "remove",
+            "printedName": "remove()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10ChaportSDK0A0C6removeyyF",
+            "mangledName": "$s10ChaportSDK0A0C6removeyyF",
+            "moduleName": "ChaportSDK",
+            "declAttributes": [
+              "AccessControl",
+              "Custom",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "setDeviceToken",
+            "printedName": "setDeviceToken(deviceToken:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10ChaportSDK0A0C14setDeviceToken06deviceE0ySS_tF",
+            "mangledName": "$s10ChaportSDK0A0C14setDeviceToken06deviceE0ySS_tF",
+            "moduleName": "ChaportSDK",
+            "declAttributes": [
+              "AccessControl",
+              "Custom",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "isChaportPushNotification",
+            "printedName": "isChaportPushNotification(notification:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "UNNotificationRequest",
+                "printedName": "UserNotifications.UNNotificationRequest",
+                "usr": "c:objc(cs)UNNotificationRequest"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10ChaportSDK0A0C02isA16PushNotification12notificationSbSo21UNNotificationRequestC_tF",
+            "mangledName": "$s10ChaportSDK0A0C02isA16PushNotification12notificationSbSo21UNNotificationRequestC_tF",
+            "moduleName": "ChaportSDK",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "handlePushNotification",
+            "printedName": "handlePushNotification(notification:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "UNNotificationRequest",
+                "printedName": "UserNotifications.UNNotificationRequest",
+                "usr": "c:objc(cs)UNNotificationRequest"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10ChaportSDK0A0C22handlePushNotification12notificationySo21UNNotificationRequestC_tF",
+            "mangledName": "$s10ChaportSDK0A0C22handlePushNotification12notificationySo21UNNotificationRequestC_tF",
+            "moduleName": "ChaportSDK",
+            "declAttributes": [
+              "AccessControl",
+              "Custom",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "isChatVisible",
+            "printedName": "isChatVisible()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10ChaportSDK0A0C13isChatVisibleSbyF",
+            "mangledName": "$s10ChaportSDK0A0C13isChatVisibleSbyF",
+            "moduleName": "ChaportSDK",
+            "declAttributes": [
+              "AccessControl",
+              "Custom"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "canStartBot",
+            "printedName": "canStartBot()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10ChaportSDK0A0C11canStartBotSbyF",
+            "mangledName": "$s10ChaportSDK0A0C11canStartBotSbyF",
+            "moduleName": "ChaportSDK",
+            "declAttributes": [
+              "AccessControl",
+              "Custom"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "parseChaportPush",
+            "printedName": "parseChaportPush(from:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "ChaportSDK.ChaportPushPayload?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ChaportPushPayload",
+                    "printedName": "ChaportSDK.ChaportPushPayload",
+                    "usr": "s:10ChaportSDK0A11PushPayloadV"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Dictionary",
+                "printedName": "[Swift.AnyHashable : Any]",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "AnyHashable",
+                    "printedName": "Swift.AnyHashable",
+                    "usr": "s:s11AnyHashableV"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ProtocolComposition",
+                    "printedName": "Any"
+                  }
+                ],
+                "usr": "s:SD"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10ChaportSDK0A0C05parseA4Push4fromAA0aD7PayloadVSgSDys11AnyHashableVypG_tF",
+            "mangledName": "$s10ChaportSDK0A0C05parseA4Push4fromAA0aD7PayloadVSgSDys11AnyHashableVypG_tF",
+            "moduleName": "ChaportSDK",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "showInAppBanner",
+            "printedName": "showInAppBanner(operatorName:operatorPhotoURL:message:tapAction:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "() -> ()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ]
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10ChaportSDK0A0C15showInAppBanner12operatorName0G8PhotoURL7message9tapActionySS_S2SyyctF",
+            "mangledName": "$s10ChaportSDK0A0C15showInAppBanner12operatorName0G8PhotoURL7message9tapActionySS_S2SyyctF",
+            "moduleName": "ChaportSDK",
+            "declAttributes": [
+              "AccessControl",
+              "Custom"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "topMostViewController",
+            "printedName": "topMostViewController(from:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "UIViewController",
+                "printedName": "UIKit.UIViewController",
+                "usr": "c:objc(cs)UIViewController"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "UIViewController",
+                "printedName": "UIKit.UIViewController",
+                "usr": "c:objc(cs)UIViewController"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10ChaportSDK0A0C21topMostViewController4fromSo06UIViewF0CAG_tF",
+            "mangledName": "$s10ChaportSDK0A0C21topMostViewController4fromSo06UIViewF0CAG_tF",
+            "moduleName": "ChaportSDK",
+            "declAttributes": [
+              "AccessControl",
+              "Custom"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "startBot",
+            "printedName": "startBot(botId:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10ChaportSDK0A0C8startBot5botIdySS_tF",
+            "mangledName": "$s10ChaportSDK0A0C8startBot5botIdySS_tF",
+            "moduleName": "ChaportSDK",
+            "declAttributes": [
+              "AccessControl",
+              "Custom",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "canStartBot",
+            "printedName": "canStartBot(botId:completion:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Swift.Bool) -> ()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ]
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10ChaportSDK0A0C11canStartBot5botId10completionySSSg_ySbctF",
+            "mangledName": "$s10ChaportSDK0A0C11canStartBot5botId10completionySSSg_ySbctF",
+            "moduleName": "ChaportSDK",
+            "declAttributes": [
+              "AccessControl",
+              "Custom",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "openFAQ",
+            "printedName": "openFAQ()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10ChaportSDK0A0C7openFAQyyF",
+            "mangledName": "$s10ChaportSDK0A0C7openFAQyyF",
+            "moduleName": "ChaportSDK",
+            "declAttributes": [
+              "AccessControl",
+              "Custom",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "openFAQArticle",
+            "printedName": "openFAQArticle(articleSlug:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10ChaportSDK0A0C14openFAQArticle11articleSlugySS_tF",
+            "mangledName": "$s10ChaportSDK0A0C14openFAQArticle11articleSlugySS_tF",
+            "moduleName": "ChaportSDK",
+            "declAttributes": [
+              "AccessControl",
+              "Custom",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "getUnreadMessage",
+            "printedName": "getUnreadMessage(completion:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Swift.String?, Swift.Int) -> ()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Tuple",
+                    "printedName": "(Swift.String?, Swift.Int)",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Optional",
+                        "printedName": "Swift.String?",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "String",
+                            "printedName": "Swift.String",
+                            "usr": "s:SS"
+                          }
+                        ],
+                        "usr": "s:Sq"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int",
+                        "printedName": "Swift.Int",
+                        "usr": "s:Si"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10ChaportSDK0A0C16getUnreadMessage10completionyySSSg_Sitc_tF",
+            "mangledName": "$s10ChaportSDK0A0C16getUnreadMessage10completionyySSSg_Sitc_tF",
+            "moduleName": "ChaportSDK",
+            "declAttributes": [
+              "AccessControl",
+              "Custom",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "sendMessageToWebView",
+            "printedName": "sendMessageToWebView(message:completion:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Dictionary",
+                "printedName": "[Swift.String : Any]",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ProtocolComposition",
+                    "printedName": "Any"
+                  }
+                ],
+                "usr": "s:SD"
+              },
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Swift.Result<Any?, any Swift.Error>) -> ()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Result",
+                    "printedName": "Swift.Result<Any?, any Swift.Error>",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Optional",
+                        "printedName": "Any?",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "ProtocolComposition",
+                            "printedName": "Any"
+                          }
+                        ],
+                        "usr": "s:Sq"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Error",
+                        "printedName": "any Swift.Error",
+                        "usr": "s:s5ErrorP"
+                      }
+                    ],
+                    "usr": "s:s6ResultO"
+                  }
+                ]
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:10ChaportSDK0A0C20sendMessageToWebView7message10completionySDySSypG_ys6ResultOyypSgs5Error_pGctF",
+            "mangledName": "$s10ChaportSDK0A0C20sendMessageToWebView7message10completionySDySSypG_ys6ResultOyypSgs5Error_pGctF",
+            "moduleName": "ChaportSDK",
+            "declAttributes": [
+              "AccessControl",
+              "Custom",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Chaport",
+                "printedName": "ChaportSDK.Chaport",
+                "usr": "c:@M@ChaportSDK@objc(cs)Chaport"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "c:@M@ChaportSDK@objc(cs)Chaport(im)init",
+            "mangledName": "$s10ChaportSDK0A0CACycfc",
+            "moduleName": "ChaportSDK",
+            "overriding": true,
+            "implicit": true,
+            "objc_name": "init",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "Override"
+            ],
+            "init_kind": "Designated"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "c:@M@ChaportSDK@objc(cs)Chaport",
+        "mangledName": "$s10ChaportSDK0A0C",
+        "moduleName": "ChaportSDK",
+        "declAttributes": [
+          "AccessControl",
+          "ObjC"
+        ],
+        "superclassUsr": "c:objc(cs)NSObject",
+        "inheritsConvenienceInitializers": true,
+        "superclassNames": [
+          "ObjectiveC.NSObject"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObservingPublishing",
+            "printedName": "_KeyValueCodingAndObservingPublishing",
+            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
+            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObserving",
+            "printedName": "_KeyValueCodingAndObserving",
+            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
+            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          }
+        ]
+      }
+    ],
+    "json_format_version": 8
+  },
+  "ConstValues": [
+    {
+      "filePath": "\/Users\/vitald3\/Desktop\/Приложения\/Chaport\/ChaportSDK\/ChaportSDK\/ChaportWebViewController.swift",
+      "kind": "Array",
+      "offset": 397,
+      "length": 2,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/Users\/vitald3\/Desktop\/Приложения\/Chaport\/ChaportSDK\/ChaportSDK\/ChaportWebViewController.swift",
+      "kind": "BooleanLiteral",
+      "offset": 431,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/vitald3\/Desktop\/Приложения\/Chaport\/ChaportSDK\/ChaportSDK\/ChaportWebViewController.swift",
+      "kind": "BooleanLiteral",
+      "offset": 534,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/vitald3\/Desktop\/Приложения\/Chaport\/ChaportSDK\/ChaportSDK\/ChaportSDK.swift",
+      "kind": "BooleanLiteral",
+      "offset": 2667,
+      "length": 4,
+      "value": "true"
+    }
+  ]
+}
