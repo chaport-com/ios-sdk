@@ -1,0 +1,8 @@
+//
+//  .gitignore
+//  ChaportSDK
+//
+//  Created by Vitald3 on 02.04.2025.
+//
+
+.swiftpm/
