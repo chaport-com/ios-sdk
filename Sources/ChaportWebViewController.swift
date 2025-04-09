@@ -114,23 +114,8 @@ class ChaportWebViewController: UIViewController, WKScriptMessageHandler {
     // MARK: - Методы для вызова из ChaportSDK
     
     func startSession(with payload: [String: Any]) {
-        let message: [String: Any] = ["action": "startSession", "session": payload]
+        let message: [String: Any] = ["action": "startSession", "payload": payload]
         evaluateJavaScript(message: message) { _ in}
-    }
-    
-    func listenForVisitorReady() {
-        let script = """
-        window.chaport.on('ready', function (data) {
-            if (data.visitorId) {
-                window.webkit.messageHandlers.nativeHandler.postMessage({
-                    action: 'visitorReady',
-                    visitorId: data.visitorId
-                });
-            }
-        });
-        """
-        
-        webView.evaluateJavaScript(script, completionHandler: nil)
     }
     
     func stopSession(completion: @escaping () -> Void) {
@@ -141,11 +126,21 @@ class ChaportWebViewController: UIViewController, WKScriptMessageHandler {
         }
     }
     
+    func setClosable(isClosable: Bool) {
+        let message: [String: Any] = [
+            "action": "setClosable",
+            "payload": isClosable
+        ]
+        evaluateJavaScript(message: message) { _ in }
+    }
+
     func setVisitorData(payload: [String: Any], hash: String) {
         let message: [String: Any] = [
             "action": "setVisitorData",
-            "payload": payload,
-            "hash": hash
+            "payload": [
+                "visitor": payload,
+                "hash": hash
+            ]
         ]
         evaluateJavaScript(message: message) { _ in }
     }
@@ -200,7 +195,6 @@ extension ChaportWebViewController: WKNavigationDelegate {
         isPageLoaded = true
         onLoadCompletion?()
         onLoadCompletion = nil
-        listenForVisitorReady()
         
         for message in pendingMessages {
             evaluateJavaScript(message: message, completion: { _ in })

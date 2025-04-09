@@ -108,6 +108,7 @@ public class Chaport: NSObject, UNUserNotificationCenterDelegate {
                 webVC.modalPresentationStyle = .fullScreen
                 viewController.present(webVC, animated: true) {
                     self.delegate?.chatDidPresent()
+                    webVC.setClosable(isClosable: true);
                 }
             }
         }
@@ -121,7 +122,9 @@ public class Chaport: NSObject, UNUserNotificationCenterDelegate {
             webVC.view.frame = containerView.bounds
             containerView.addSubview(webVC.view)
             webVC.didMove(toParent: parentViewController)
-            delegate?.chatDidStart()
+
+            webVC.setClosable(isClosable: false)
+            self.delegate?.chatDidPresent()
         }
     }
     
@@ -288,7 +291,7 @@ public class Chaport: NSObject, UNUserNotificationCenterDelegate {
     
     /// Запуск чат-бота
     @MainActor public func startBot(botId: String) {
-        let timestamp = Date().timeIntervalSince1970
+        let timestamp = Date().timeIntervalSince1970 * 1000
         let payload: [String: Any] = ["id": botId, "timestamp": timestamp]
         webViewController?.startBot(payload: payload)
     }
@@ -351,14 +354,13 @@ public class Chaport: NSObject, UNUserNotificationCenterDelegate {
             let token = sha1(personalSalt + visitorId)
             self.visitorDataHash = token
             
-            sessionData["user"] = [
-                "visitorId": visitorId,
+            return [
+                "id": visitorId,
                 "token": token
             ]
         }
 
-        sessionData["persist"] = true
-        return sessionData
+        return [:]
     }
     
     @MainActor private func loadWebViewIfNeeded(completion: @escaping () -> Void) {
@@ -449,6 +451,8 @@ extension Chaport: ChaportWebViewControllerDelegate {
                 print("Event: \(event)")
                 
                 switch event {
+                case "chat.dismiss":
+                    dismiss()
                 case "chat.start":
                     delegate?.chatDidStart()
                 case "chat.unreadChange":
