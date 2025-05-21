@@ -28,10 +28,13 @@ class ViewController: UIViewController, ChaportSDKDelegate {
     }
     
     @IBAction func stopSession(_ sender: UIButton) {
-        Chaport.shared.stopSession()
+        Chaport.shared.stopSession() {
+            self.setupVisitor()
+        }
     }
     
     @IBAction func openFAQ(_ sender: UIButton) {
+        Chaport.shared.embed(into: chat, parentViewController: self)
         Chaport.shared.openFAQ()
     }
     
@@ -44,6 +47,16 @@ class ViewController: UIViewController, ChaportSDKDelegate {
     func chatDidStart() {
         print("chatDidStart")
         self.updateRemoveButtonColor()
+        
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+            if granted {
+                DispatchQueue.main.async {
+                    UIApplication.shared.registerForRemoteNotifications()
+                }
+            } else {
+                print("Push permission denied: \(String(describing: error))")
+            }
+        }
     }
     
     func chatDidPresent() {
@@ -68,16 +81,24 @@ class ViewController: UIViewController, ChaportSDKDelegate {
     
     func linkDidClick(url: URL) {
         print("Chat did click link: \(url)")
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     
     private func setup() {
-        var config = Config(appId: "68053332ad398e9f37c63675")
-        config["region"] = "ru"
+        var config = Config(appId: "5f1934c97b03b95bf88d284a")
+        config["region"] = "local"
+//        var config = Config(appId: "07da6b4daf891330f3354098")
+//        config["region"] = "ru"
         Chaport.shared.delegate = self
         Chaport.shared.configure(config: config)
-        Chaport.shared.setLanguage(languageCode: "ru")
-        Chaport.shared.setVisitorData(visitor: VisitorData(name: "Test", email: "local@email.ru", phone: "+79992223344", notes: "Notes", custom: ["field1": "Test"]))
+        
+        setupVisitor()
+    }
+    
+    private func setupVisitor() {
+//        Chaport.shared.setLanguage(languageCode: "ru")
         Chaport.shared.startSession()
+        Chaport.shared.setVisitorData(visitor: VisitorData(name: "Test SDK visitor", custom: ["field1": "Test"]))
     }
     
     private func updateUnreadLabel() {
@@ -89,7 +110,7 @@ class ViewController: UIViewController, ChaportSDKDelegate {
     }
     
     private func updateRemoveButtonColor() {
-        let color = Chaport.shared.isStartSession && Chaport.shared.isChatVisible()
+        let color = Chaport.shared.isChatVisible()
             ? UIColor.systemBlue
             : UIColor(red: 0xCC / 255.0, green: 0xCC / 255.0, blue: 0xD0 / 255.0, alpha: 1.0)
 
