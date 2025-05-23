@@ -1,4 +1,5 @@
 import SwiftUI
+import ChaportSDK
 
 @main
 struct Example_SwiftUIApp: App {

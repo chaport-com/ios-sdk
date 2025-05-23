@@ -1,10 +1,10 @@
 import Foundation
 
-public protocol ChaportSDKDelegate: AnyObject {
-    func chatDidStart()
-    func chatDidPresent()
-    func chatDidDismiss()
-    func chatDidFail(error: Error)
-    func unreadMessageDidChange(unreadCount: Int, lastMessage: String?)
-    func linkDidClick(url: URL)
+@objc public protocol ChaportSDKDelegate: NSObjectProtocol {
+    @objc optional func chatDidStart()
+    @objc optional func chatDidPresent()
+    @objc optional func chatDidDismiss()
+    @objc optional func chatDidFail(error: Error)
+    @objc optional func unreadMessageDidChange(unreadCount: Int, lastMessage: String?)
+    @objc optional func linkDidClick(url: URL) -> WebViewLinkAction
 }

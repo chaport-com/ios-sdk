@@ -11,9 +11,9 @@ let package = Package(
         )
     ],
     targets: [
-        .binaryTarget(
+        .target(
             name: "ChaportSDK",
-            path: "Frameworks/ChaportSDK.xcframework"
+            path: "Sources"
         )
     ]
 )

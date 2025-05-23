@@ -1,4 +1,5 @@
 import UIKit
+import ChaportSDK
 
 class ViewController: UIViewController, ChaportSDKDelegate {
 
@@ -85,10 +86,8 @@ class ViewController: UIViewController, ChaportSDKDelegate {
     }
     
     private func setup() {
-        var config = Config(appId: "5f1934c97b03b95bf88d284a")
-        config["region"] = "local"
-//        var config = Config(appId: "07da6b4daf891330f3354098")
-//        config["region"] = "ru"
+        var config = Config(appId: "07da6b4daf891330f3354098")
+        config["region"] = "ru"
         Chaport.shared.delegate = self
         Chaport.shared.configure(config: config)
         
@@ -96,9 +95,8 @@ class ViewController: UIViewController, ChaportSDKDelegate {
     }
     
     private func setupVisitor() {
-//        Chaport.shared.setLanguage(languageCode: "ru")
         Chaport.shared.startSession()
-        Chaport.shared.setVisitorData(visitor: VisitorData(name: "Test SDK visitor", custom: ["field1": "Test"]))
+        Chaport.shared.setVisitorData(visitor: VisitorData(name: "Test SDK visitor"))
     }
     
     private func updateUnreadLabel() {

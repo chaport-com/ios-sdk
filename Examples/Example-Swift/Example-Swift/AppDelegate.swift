@@ -1,4 +1,5 @@
 import SwiftUI
+import ChaportSDK
 
 @UIApplicationMain
 class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {

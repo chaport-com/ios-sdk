@@ -7,8 +7,7 @@ class ChatWindow {
         config["region"] = "eu"
         Chaport.shared.delegate = delegate
         Chaport.shared.configure(config: config)
-        Chaport.shared.setLanguage(languageCode: "ru")
-        Chaport.shared.setVisitorData(visitor: VisitorData(name: "Test", email: "local@email.ru", phone: "+79992223344", notes: "Notes", custom: ["field1": "Test"]))
+        Chaport.shared.setVisitorData(visitor: VisitorData(name: "Test SDK visitor"))
         Chaport.shared.startSession()
     }
  
