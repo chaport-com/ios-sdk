@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'Chaport'
-  s.version          = '1.0.10'
+  s.version          = '1.0.11'
   s.summary          = 'Chaport live chat for your iOS app.'
   s.homepage         = 'https://github.com/chaport-com/ios-sdk'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
