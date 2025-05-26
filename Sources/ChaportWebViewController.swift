@@ -1,5 +1,5 @@
+@preconcurrency import WebKit
 import UIKit
-import WebKit
 
 @MainActor
 @objc public protocol ChaportWebViewControllerDelegate: AnyObject {
@@ -37,24 +37,24 @@ class ChaportWebViewController: UIViewController, WKScriptMessageHandler, WKNavi
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        print("webView didFinish 1")
+//        print("webView didFinish 1")
         hasLoaded = true
         isLoading = false
 
-        print("webView didFinish 2")
+//        print("webView didFinish 2")
         self.dataSource?.restoreWebView() { result in
-            print("webView didFinish 3")
+//            print("webView didFinish 3")
             let completions = self.loadCompletions
             self.loadCompletions.removeAll()
             
             if case .success = result {
-                print("Sending pending messending")
+//                print("Sending pending messending")
                 for message in self.pendingMessages {
                     self.evaluateJavaScript(message: message, completion: { _ in })
                 }
                 self.pendingMessages.removeAll()
 
-                print("webView didFinish end")
+//                print("webView didFinish end")
                 completions.forEach { $0(.success(())) }
             } else {
                 completions.forEach { $0(.failure(ChaportSDKError.webViewNotLoaded)) }
@@ -72,7 +72,7 @@ class ChaportWebViewController: UIViewController, WKScriptMessageHandler, WKNavi
 
         if let url = navigationAction.request.url {
             // Example: intercept all links
-            print("Attempting to navigate to: \(url.absoluteString)")
+//            print("Attempting to navigate to: \(url.absoluteString)")
             
             let decision = delegate?.webViewLinkClicked?(url: url) ?? .allow
             
@@ -148,20 +148,20 @@ class ChaportWebViewController: UIViewController, WKScriptMessageHandler, WKNavi
     }
     
     func loadWebView(completion: @escaping (Result<Void, Error>) -> Void) {
-        print("loadWebView 1")
+//        print("loadWebView 1")
         if hasLoaded {
             completion(.success(()))
             return
         }
         
-        print("loadWebView 2")
+//        print("loadWebView 2")
 
         if isLoading {
             loadCompletions.append(completion)
             return
         }
         
-        print("loadWebView 3")
+//        print("loadWebView 3")
         
         guard let dataSource = self.dataSource else {
             Logger.log("WebView data source is empty", level: .error)
@@ -169,7 +169,7 @@ class ChaportWebViewController: UIViewController, WKScriptMessageHandler, WKNavi
             return
         }
         
-        print("loadWebView 4")
+//        print("loadWebView 4")
         
         guard let webViewURL = dataSource.webViewURL else {
             Logger.log("WebView URL is empty", level: .error)
@@ -177,7 +177,7 @@ class ChaportWebViewController: UIViewController, WKScriptMessageHandler, WKNavi
             return
         }
         
-        print("loadWebView 5")
+//        print("loadWebView 5")
 
         isLoading = true
         loadCompletions.append(completion)
@@ -188,7 +188,7 @@ class ChaportWebViewController: UIViewController, WKScriptMessageHandler, WKNavi
         let request = URLRequest(url: webViewURL)
         webViewInstance.load(request)
         
-        print("loadWebView end")
+//        print("loadWebView end")
     }
     
     // MARK: - WKScriptMessageHandler
@@ -212,7 +212,7 @@ class ChaportWebViewController: UIViewController, WKScriptMessageHandler, WKNavi
 //                    return
 //                }
 //            }
-            print("A new message pending \(message)")
+//            print("A new message pending \(message)")
             pendingMessages.append(message)
             return
         }
@@ -227,7 +227,7 @@ class ChaportWebViewController: UIViewController, WKScriptMessageHandler, WKNavi
         
         let js = "window.chaportSdkBridge.receiveMessageFromSDK(\(jsonString));"
         
-        print(js)
+//        print(js)
 
         self.webViewInstance.evaluateJavaScript(js) { (result, error) in
             if let error = error {

@@ -1,8 +1,8 @@
 import Foundation
-import WebKit
+//import WebKit
 import UIKit
-import UserNotifications
-import CommonCrypto
+//import UserNotifications
+//import CommonCrypto
 
 public enum ChaportSDKError: Error {
     case webViewNotLoaded
@@ -12,9 +12,9 @@ public enum ChaportSDKError: Error {
     case chatError(payload: [String: String]?)
 }
 
-public class Chaport: NSObject {
+public class ChaportSDK: NSObject {
     
-    @MainActor public static let shared = Chaport()
+    @MainActor public static let shared = ChaportSDK()
     public weak var delegate: ChaportSDKDelegate?
     private var _isSessionStarted: Bool = false
 //    private var _isChatVisible: Bool = false
@@ -64,7 +64,11 @@ public class Chaport: NSObject {
         var queryItems: [URLQueryItem] = []
         queryItems.append(URLQueryItem(name: "appId", value: config.appId))
         if languageCode == nil {
-            languageCode = Locale.current.languageCode
+            if #available(iOS 16, *) {
+                languageCode = Locale.current.language.languageCode?.identifier
+            } else {
+                languageCode = Locale.current.languageCode
+            }
         }
         
         queryItems.append(URLQueryItem(name: "language", value: languageCode))
@@ -187,24 +191,24 @@ public class Chaport: NSObject {
             return
         }
         
-        print("Will present 1");
+//        print("Will present 1");
         
         // TODO load webview
 //        checkSession()
         self.ensureWebViewLoaded(waitForLoad: false) { _ in
-            print("Will present 2");
+//            print("Will present 2");
             guard let webVC = self.webViewController else {
                 self.delegate?.chatDidFail?(error: ChaportSDKError.webViewNotLoaded)
                 return
             }
             
             DispatchQueue.main.async {
-                print("Will present 3");
+//                print("Will present 3");
                 guard viewController.view.window != nil else {
                     return
                 }
                 
-                print("Will present 4");
+//                print("Will present 4");
                 
                 webVC.willMove(toParent: nil)
                 webVC.view.removeFromSuperview()
@@ -212,9 +216,9 @@ public class Chaport: NSObject {
 
                 webVC.modalPresentationStyle = .pageSheet
                 
-                print("Will present 5");
+//                print("Will present 5");
                 viewController.present(webVC, animated: true) {
-                    print("Will present 6");
+//                    print("Will present 6");
                     self._isChatVisible = true
                     
     //                if self.isSessionStarted() {
@@ -227,7 +231,7 @@ public class Chaport: NSObject {
                     }
                     webVC.setClosable(isClosable: true)
                     completion()
-                    print("Will present 7");
+//                    print("Will present 7");
                 }
             }
         }
@@ -443,29 +447,30 @@ public class Chaport: NSObject {
 
         webViewInactivityTimer?.invalidate()
         
-        webViewInactivityTimer = Timer.scheduledTimer(withTimeInterval: 600, repeats: false) { _ in
+        webViewInactivityTimer = Timer.scheduledTimer(withTimeInterval: 600, repeats: false) { [weak self] _ in
             DispatchQueue.main.async {
+                guard let self = self else { return }
                 if self.isChatVisible() {
-                    Chaport.shared.resetInactivityTimer()
+                    ChaportSDK.shared.resetInactivityTimer()
                 } else {
-                    Chaport.shared.destroyWebView()
+                    ChaportSDK.shared.destroyWebView()
                 }
             }
         }
     }
     
     @MainActor private func ensureWebViewLoaded(waitForLoad: Bool = true, completion: @escaping (Result<Void, Error>) -> Void) {
-        print("ensureWebViewLoaded 1")
+//        print("ensureWebViewLoaded 1")
         if isSessionStarted() {
             self.resetInactivityTimer()
-            print("ensureWebViewLoaded 2")
+//            print("ensureWebViewLoaded 2")
             
             if waitForLoad {
                 webViewController?.loadWebView(completion: { result in
-                    print("ensureWebViewLoaded 3")
+//                    print("ensureWebViewLoaded 3")
                     switch result {
                     case .success():
-                        print("ensureWebViewLoaded 4")
+//                        print("ensureWebViewLoaded 4")
                         completion(.success(()))
                     case .failure(let error):
                         completion(.failure(error))
@@ -566,7 +571,7 @@ public class Chaport: NSObject {
 
 // MARK: - ChaportWebViewControllerDelegate
 
-extension Chaport: ChaportWebViewControllerDelegate {
+extension ChaportSDK: ChaportWebViewControllerDelegate {
     public func webViewLinkClicked(url: URL) -> WebViewLinkAction {
         return delegate?.linkDidClick?(url: url) ?? .allow
     }
@@ -575,8 +580,8 @@ extension Chaport: ChaportWebViewControllerDelegate {
         let payload = message["payload"] as? [String : Any] ?? [:]
         let data = (payload["data"] ?? payload) as? [String : Any] ?? [:]
         
-        print("Action: \(action)")
-        print("Payload: \(data)")
+//        print("Action: \(action)")
+//        print("Payload: \(data)")
         
         switch action {
         case "ack":
@@ -634,25 +639,25 @@ extension Chaport: ChaportWebViewControllerDelegate {
     }
 }
 
-extension Chaport: ChaportWebViewDataSource {
+extension ChaportSDK: ChaportWebViewDataSource {
     func onWebViewDidDisappear() {
         self._isChatVisible = false
     }
     func restoreWebView(completion: @escaping (Result<Any?, Error>) -> Void) {
-        print("restoreWebView 1")
+//        print("restoreWebView 1")
         var payload: [String: Any]? = nil
         
         if let details = details {
             payload = ["id": details.id, "token": details.token]
         }
         
-        print("restoreWebView 2")
+//        print("restoreWebView 2")
         self.webViewController?.startSession(payload: payload) { result in
-            print("restoreWebView 3")
+//            print("restoreWebView 3")
             switch result {
             case .success():
 //                print("Session started successfully")
-                print("restoreWebView end")
+//                print("restoreWebView end")
                 if self.visitorData != nil {
                     self.webViewController?.setVisitorData(visitorData: self.visitorData!, hash: self.hashStr)
                 }
