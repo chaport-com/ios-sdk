@@ -2,5 +2,5 @@ platform :ios, '13.0'
 use_frameworks!
 
 target 'Example-Swift' do
-  pod 'ChaportSDK', '~> 1.0'
+  pod 'Chaport', '~> 1.0'
 end

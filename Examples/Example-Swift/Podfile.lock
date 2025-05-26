@@ -1,16 +1,16 @@
 PODS:
-  - ChaportSDK (1.0.9)
+  - Chaport (1.0.11)
 
 DEPENDENCIES:
-  - ChaportSDK (~> 1.0)
+  - Chaport (~> 1.0)
 
 SPEC REPOS:
   trunk:
-    - ChaportSDK
+    - Chaport
 
 SPEC CHECKSUMS:
-  ChaportSDK: f50bfed7e3aaab1d557dc586c339b608f2e4b3b5
+  Chaport: d966fbfae6cb77d8b7acb8f5af51287fb927ba5a
 
-PODFILE CHECKSUM: 50cae90cb934c29754fceb18f97eda6ca881fd59
+PODFILE CHECKSUM: 293ac8e0beae16da35d38fc79bf6b3d984385d50
 
 COCOAPODS: 1.16.2
