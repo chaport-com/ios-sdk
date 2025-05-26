@@ -1,4 +1,5 @@
 import SwiftUI
+import Chaport
 
 struct ContentView: View {
     @State private var isStart = false
@@ -13,10 +14,10 @@ struct ContentView: View {
                 VStack(spacing: 20) {
                     HStack(spacing: 20) {
                         OptionButton(label: "Present", action: {
-                            Chaport.shared.present(from: UIApplication.shared.windows.first!.rootViewController!)
+                            ChaportSDK.shared.present(from: UIApplication.shared.windows.first!.rootViewController!)
                         })
                         OptionButton(label: "Clear session", action: {
-                            Chaport.shared.stopSession()
+                            ChaportSDK.shared.stopSession()
                         })
                     }
                     .padding(.top, 20)
@@ -25,21 +26,21 @@ struct ContentView: View {
                         OptionButton(label: "Embed", action: {
                             if let vc = EmbedBox.lastCreatedController,
                                let chatContainer = EmbedBox.lastChatContainer {
-                                Chaport.shared.embed(into: chatContainer, parentViewController: vc)
+                                ChaportSDK.shared.embed(into: chatContainer, parentViewController: vc)
                             }
                         })
                         OptionButton(label: "FAQ", action: {
                             if let vc = EmbedBox.lastCreatedController,
                                let chatContainer = EmbedBox.lastChatContainer {
-                                Chaport.shared.embed(into: chatContainer, parentViewController: vc)
-                                Chaport.shared.openFAQ()
+                                ChaportSDK.shared.embed(into: chatContainer, parentViewController: vc)
+                                ChaportSDK.shared.openFAQ()
                             }
                         })
                     }
                     
                     HStack(spacing: 20) {
                         OptionButton(label: "Remove", color: !isStart ? Color(red: 0xCC/255, green: 0xCC/255, blue: 0xD0/255) : nil, action: {
-                            Chaport.shared.remove()
+                            ChaportSDK.shared.remove()
                         })
                         HStack {
                             Text("Unread: \(unread)").frame(maxWidth: .infinity)

@@ -1,5 +1,5 @@
 import SwiftUI
-import ChaportSDK
+import Chaport
 
 @UIApplicationMain
 class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -24,7 +24,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let tokenString = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
-        Chaport.shared.setDeviceToken(deviceToken: tokenString)
+        ChaportSDK.shared.setDeviceToken(deviceToken: tokenString)
     }
 
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {

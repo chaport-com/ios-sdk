@@ -1,14 +1,15 @@
 import SwiftUI
+import Chaport
 
 class ChatWindow {
     
     @MainActor static func setup(with delegate: Delegate) {
         var config = Config(appId: "68053332ad398e9f37c63675")
         config["region"] = "eu"
-        Chaport.shared.delegate = delegate
-        Chaport.shared.configure(config: config)
-        Chaport.shared.setVisitorData(visitor: VisitorData(name: "Test SDK visitor"))
-        Chaport.shared.startSession()
+        ChaportSDK.shared.delegate = delegate
+        ChaportSDK.shared.configure(config: config)
+        ChaportSDK.shared.setVisitorData(visitor: VisitorData(name: "Test SDK visitor"))
+        ChaportSDK.shared.startSession()
     }
  
     class Delegate: NSObject, ChaportSDKDelegate {

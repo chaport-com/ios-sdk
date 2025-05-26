@@ -1,5 +1,5 @@
 import UIKit
-import ChaportSDK
+import Chaport
 
 class ViewController: UIViewController, ChaportSDKDelegate {
 
@@ -21,26 +21,26 @@ class ViewController: UIViewController, ChaportSDKDelegate {
     }
     
     @IBAction func openChatModal(_ sender: UIButton) {
-        Chaport.shared.present(from: self)
+        ChaportSDK.shared.present(from: self)
     }
     
     @IBAction func openChatEmbed(_ sender: UIButton) {
-        Chaport.shared.embed(into: chat, parentViewController: self)
+        ChaportSDK.shared.embed(into: chat, parentViewController: self)
     }
     
     @IBAction func stopSession(_ sender: UIButton) {
-        Chaport.shared.stopSession() {
+        ChaportSDK.shared.stopSession() {
             self.setupVisitor()
         }
     }
     
     @IBAction func openFAQ(_ sender: UIButton) {
-        Chaport.shared.embed(into: chat, parentViewController: self)
-        Chaport.shared.openFAQ()
+        ChaportSDK.shared.embed(into: chat, parentViewController: self)
+        ChaportSDK.shared.openFAQ()
     }
     
     @IBAction func remove(_ sender: UIButton) {
-        Chaport.shared.remove()
+        ChaportSDK.shared.remove()
     }
     
     // MARK: - ChaportSDKDelegate
@@ -88,15 +88,15 @@ class ViewController: UIViewController, ChaportSDKDelegate {
     private func setup() {
         var config = Config(appId: "07da6b4daf891330f3354098")
         config["region"] = "ru"
-        Chaport.shared.delegate = self
-        Chaport.shared.configure(config: config)
+        ChaportSDK.shared.delegate = self
+        ChaportSDK.shared.configure(config: config)
         
         setupVisitor()
     }
     
     private func setupVisitor() {
-        Chaport.shared.startSession()
-        Chaport.shared.setVisitorData(visitor: VisitorData(name: "Test SDK visitor"))
+        ChaportSDK.shared.startSession()
+        ChaportSDK.shared.setVisitorData(visitor: VisitorData(name: "Test SDK visitor"))
     }
     
     private func updateUnreadLabel() {
@@ -108,7 +108,7 @@ class ViewController: UIViewController, ChaportSDKDelegate {
     }
     
     private func updateRemoveButtonColor() {
-        let color = Chaport.shared.isChatVisible()
+        let color = ChaportSDK.shared.isChatVisible()
             ? UIColor.systemBlue
             : UIColor(red: 0xCC / 255.0, green: 0xCC / 255.0, blue: 0xD0 / 255.0, alpha: 1.0)
 
