@@ -1,5 +1,5 @@
 PODS:
-  - ChaportSDK (1.0.7)
+  - ChaportSDK (1.0.9)
 
 DEPENDENCIES:
   - ChaportSDK (~> 1.0)
@@ -9,7 +9,7 @@ SPEC REPOS:
     - ChaportSDK
 
 SPEC CHECKSUMS:
-  ChaportSDK: e8a9b402b90077eabc755e3328b25575d308a85e
+  ChaportSDK: f50bfed7e3aaab1d557dc586c339b608f2e4b3b5
 
 PODFILE CHECKSUM: 50cae90cb934c29754fceb18f97eda6ca881fd59
 
