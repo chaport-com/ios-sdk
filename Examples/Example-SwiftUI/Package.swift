@@ -16,7 +16,7 @@ let package = Package(
     targets: [
         .executableTarget(
             name: "Example-SwiftUI",
-            dependencies: ["ChaportSDK"],
+            dependencies: ["Chaport"],
             path: "Example-SwiftUI",
         )
     ]
