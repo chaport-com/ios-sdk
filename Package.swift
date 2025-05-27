@@ -2,17 +2,17 @@
 import PackageDescription
 
 let package = Package(
-    name: "Chaport",
+    name: "ChaportSDK",
     platforms: [.iOS(.v13)],
     products: [
         .library(
-            name: "Chaport",
-            targets: ["Chaport"]
+            name: "ChaportSDK",
+            targets: ["ChaportSDK"]
         )
     ],
     targets: [
         .target(
-            name: "Chaport",
+            name: "ChaportSDK",
             path: "Sources"
         )
     ]
