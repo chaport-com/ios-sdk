@@ -48,8 +48,9 @@ class ChatWindow {
             print("Chat unreadMessageDidChange, unreadCount: \(unreadCount), lastMessage: \(lastMessage ?? "")")
         }
         
-        func linkDidClick(url: URL) {
+        func linkDidClick(url: URL) -> WebViewLinkAction {
             print("Chat did click link: \(url)")
+            return .allow
         }
     }
 }

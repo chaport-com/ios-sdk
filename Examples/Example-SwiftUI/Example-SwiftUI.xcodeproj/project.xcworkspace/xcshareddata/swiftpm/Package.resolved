@@ -1,0 +1,15 @@
+{
+  "originHash" : "d6bf65d764f58341249a67b92ca62219deb0e5ad937a6f68523d9da8d30a2c69",
+  "pins" : [
+    {
+      "identity" : "ios-sdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/chaport-com/ios-sdk",
+      "state" : {
+        "revision" : "94dc05470b6ab8d5f72b428e5b4687012b8f94d1",
+        "version" : "1.0.21"
+      }
+    }
+  ],
+  "version" : 3
+}
