@@ -1,5 +1,5 @@
 import SwiftUI
-import ChaportSDK
+import Chaport
 
 @main
 struct Example_SwiftUIApp: App {
@@ -26,21 +26,24 @@ struct Example_SwiftUIApp: App {
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
-    
-    func userNotificationCenter(_ center: UNUserNotificationCenter,
-                                willPresent notification: UNNotification,
-                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        ChaportSDK.shared.handlePushNotification(notification: notification.request)
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        willPresent notification: UNNotification,
+        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
+    ) {
+        // Show it anyway (banner, sound, etc.)
+        if !ChaportSDK.shared.isChatVisible() {
+            completionHandler([.banner, .sound])
+        }
     }
-
-    func userNotificationCenter(_ center: UNUserNotificationCenter,
-                                didReceive response: UNNotificationResponse,
-                                withCompletionHandler completionHandler: @escaping () -> Void) {
+    
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        didReceive response: UNNotificationResponse,
+        withCompletionHandler completionHandler: @escaping () -> Void
+    ) {
         if ChaportSDK.shared.isChaportPushNotification(notification: response.notification.request) {
-            if let rootVC = UIApplication.shared.windows.first?.rootViewController,
-               let topVC = ChaportSDK.shared.topMostViewController(from: rootVC) {
-                ChaportSDK.shared.present(from: topVC)
-            }
+            ChaportSDK.shared.present()
         }
 
         completionHandler()

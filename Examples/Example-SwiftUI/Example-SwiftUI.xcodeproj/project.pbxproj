@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		730B09422DE5AB0B00D3327B /* Chaport in Frameworks */ = {isa = PBXBuildFile; productRef = 730B09412DE5AB0B00D3327B /* Chaport */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		8E5C0A262D0300B800D2DA5F /* Example-SwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Example-SwiftUI.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A96E33B42DB54E72008C3BCF /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -37,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				730B09422DE5AB0B00D3327B /* Chaport in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,6 +93,7 @@
 			);
 			name = "Example-SwiftUI";
 			packageProductDependencies = (
+				730B09412DE5AB0B00D3327B /* Chaport */,
 			);
 			productName = "Example-SwiftUI";
 			productReference = 8E5C0A262D0300B800D2DA5F /* Example-SwiftUI.app */;
@@ -118,6 +124,7 @@
 			mainGroup = 8E5C0A1D2D0300B800D2DA5F;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				730B09402DE5AB0B00D3327B /* XCRemoteSwiftPackageReference "ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 8E5C0A272D0300B800D2DA5F /* Products */;
@@ -357,6 +364,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		730B09402DE5AB0B00D3327B /* XCRemoteSwiftPackageReference "ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/chaport-com/ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.17;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		730B09412DE5AB0B00D3327B /* Chaport */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 730B09402DE5AB0B00D3327B /* XCRemoteSwiftPackageReference "ios-sdk" */;
+			productName = Chaport;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 8E5C0A1E2D0300B800D2DA5F /* Project object */;
 }

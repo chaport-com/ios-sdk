@@ -14,7 +14,7 @@ struct ContentView: View {
                 VStack(spacing: 20) {
                     HStack(spacing: 20) {
                         OptionButton(label: "Present", action: {
-                            ChaportSDK.shared.present(from: UIApplication.shared.windows.first!.rootViewController!)
+                            ChaportSDK.shared.present()
                         })
                         OptionButton(label: "Clear session", action: {
                             ChaportSDK.shared.stopSession()

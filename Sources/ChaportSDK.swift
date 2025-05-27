@@ -185,7 +185,7 @@ public class ChaportSDK: NSObject {
     }
     
     /// Отображение чата (модально)
-    @MainActor public func present(from viewController: UIViewController, completion: @escaping () -> Void = {}) {
+    @MainActor public func present(from viewController: UIViewController? = nil, completion: @escaping () -> Void = {}) {
         if !isSessionStarted() {
             Logger.log("You must call startSession() before using present()", level: .warning)
             return
@@ -202,11 +202,11 @@ public class ChaportSDK: NSObject {
                 return
             }
             
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
 //                print("Will present 3");
-                guard viewController.view.window != nil else {
-                    return
-                }
+                guard let self = self else { return }
+                let presentingVC = viewController ?? self.getTopViewController()
+                guard presentingVC?.view.window != nil else { return }
                 
 //                print("Will present 4");
                 
@@ -217,18 +217,10 @@ public class ChaportSDK: NSObject {
                 webVC.modalPresentationStyle = .pageSheet
                 
 //                print("Will present 5");
-                viewController.present(webVC, animated: true) {
+                presentingVC?.present(webVC, animated: true) {
 //                    print("Will present 6");
                     self._isChatVisible = true
                     
-    //                if self.isSessionStarted() {
-    //                    self.delegate?.chatDidPresent()
-    //                    return
-    //                }
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-//                        webVC.setClosable(isClosable: true)
-                    }
                     webVC.setClosable(isClosable: true)
                     completion()
 //                    print("Will present 7");
@@ -440,6 +432,27 @@ public class ChaportSDK: NSObject {
     
     // MARK: - Внутренние методы
     
+    private func getTopViewController(base: UIViewController? = UIApplication.shared.connectedScenes
+        .compactMap { ($0 as? UIWindowScene)?.keyWindow }
+        .first?.rootViewController) -> UIViewController? {
+
+        if let nav = base as? UINavigationController {
+            return getTopViewController(base: nav.visibleViewController)
+        }
+
+        if let tab = base as? UITabBarController {
+            if let selected = tab.selectedViewController {
+                return getTopViewController(base: selected)
+            }
+        }
+
+        if let presented = base?.presentedViewController {
+            return getTopViewController(base: presented)
+        }
+
+        return base
+    }
+
     private func resetInactivityTimer() {
         if (webViewController != nil) {
             return
