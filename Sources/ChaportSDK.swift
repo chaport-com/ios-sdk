@@ -432,22 +432,32 @@ public class ChaportSDK: NSObject {
     
     // MARK: - Внутренние методы
     
-    private func getTopViewController(base: UIViewController? = UIApplication.shared.connectedScenes
-        .compactMap { ($0 as? UIWindowScene)?.keyWindow }
-        .first?.rootViewController) -> UIViewController? {
+    private func getTopViewController(from base: UIViewController? = {
+        // iOS 13+ safe access to the topmost window's root view controller
+        let activeScene = UIApplication.shared.connectedScenes
+            .filter { $0.activationState == .foregroundActive }
+            .compactMap { $0 as? UIWindowScene }
+            .first
+
+        let rootVC = activeScene?.windows
+            .first(where: { $0.isKeyWindow })?
+            .rootViewController
+
+        return rootVC
+    }()) -> UIViewController? {
 
         if let nav = base as? UINavigationController {
-            return getTopViewController(base: nav.visibleViewController)
+            return getTopViewController(from: nav.visibleViewController)
         }
 
         if let tab = base as? UITabBarController {
             if let selected = tab.selectedViewController {
-                return getTopViewController(base: selected)
+                return getTopViewController(from: selected)
             }
         }
 
         if let presented = base?.presentedViewController {
-            return getTopViewController(base: presented)
+            return getTopViewController(from: presented)
         }
 
         return base
