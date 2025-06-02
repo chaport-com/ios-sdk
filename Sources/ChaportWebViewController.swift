@@ -15,7 +15,8 @@ class ChaportWebViewController: UIViewController, WKScriptMessageHandler, WKNavi
     private var pendingMessages: [[String: Any]] = []
     private var pendingRequestCompletions: [String: (Result<Any, Error>) -> Void] = [:]
 
-    private var hasLoaded = false
+    internal var isLoaded = false
+    internal var isStartSessionProcessed = false
     private var isLoading = false
     private var loadCompletions: [ (Result<Void, Error>) -> Void ] = []
     
@@ -37,12 +38,13 @@ class ChaportWebViewController: UIViewController, WKScriptMessageHandler, WKNavi
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-//        print("webView didFinish 1")
-        hasLoaded = true
-        isLoading = false
-
 //        print("webView didFinish 2")
+        self.isLoaded = true
+
         self.dataSource?.restoreWebView() { result in
+            self.isStartSessionProcessed = true
+            self.isLoading = false
+
 //            print("webView didFinish 3")
             let completions = self.loadCompletions
             self.loadCompletions.removeAll()
@@ -149,7 +151,7 @@ class ChaportWebViewController: UIViewController, WKScriptMessageHandler, WKNavi
     
     func loadWebView(completion: @escaping (Result<Void, Error>) -> Void) {
 //        print("loadWebView 1")
-        if hasLoaded {
+        if isStartSessionProcessed {
             completion(.success(()))
             return
         }
@@ -204,22 +206,20 @@ class ChaportWebViewController: UIViewController, WKScriptMessageHandler, WKNavi
         }
     }
     
-    func evaluateJavaScript(message: [String: Any], completion: @escaping (Result<Any?, Error>) -> Void) {
-        if !hasLoaded {
-//            if let newAction = message["action"] as? String {
-//                let alreadyQueued = pendingMessages.contains {
-//                    ($0["action"] as? String) == newAction
-//                }
-//
-//                if alreadyQueued {
-//                    return
-//                }
-//            }
-//            print("A new message pending \(message)")
-            pendingMessages.append(message)
-            return
+    func evaluateJavaScript(message: [String: Any], waitUntilSessionStarted: Bool = true, completion: @escaping (Result<Any?, Error>) -> Void) {
+//        print("waitUntilSessionStarted: \(waitUntilSessionStarted), isStartSessionProcessed: \(isStartSessionProcessed), isLoaded: \(isLoaded), message: \(message)")
+        if waitUntilSessionStarted {
+            if !isStartSessionProcessed {
+                pendingMessages.append(message)
+                return
+            }
+        } else {
+            if !isLoaded {
+                pendingMessages.append(message)
+                return
+            }
         }
-        
+
 //        print(message)
         
         guard let jsonData = try? JSONSerialization.data(withJSONObject: message, options: []),
@@ -241,14 +241,14 @@ class ChaportWebViewController: UIViewController, WKScriptMessageHandler, WKNavi
         }
     }
     
-    public func evaluateJavascriptWithResponse(message: [String: Any], completion: @escaping (Result<Any, Error>) -> Void) {
+    public func evaluateJavascriptWithResponse(message: [String: Any], waitUntilSessionStarted: Bool = true, completion: @escaping (Result<Any, Error>) -> Void) {
         var message = message
         let requestId = UUID().uuidString
         message["requestId"] = requestId
         
         pendingRequestCompletions[requestId] = completion
 
-        self.evaluateJavaScript(message: message) { _ in }
+        self.evaluateJavaScript(message: message, waitUntilSessionStarted: waitUntilSessionStarted) { _ in }
     }
     
     public func resolvePendingRequest(message: [String: Any]) {
@@ -273,9 +273,10 @@ class ChaportWebViewController: UIViewController, WKScriptMessageHandler, WKNavi
             message["payload"] = payload
         }
         
-        evaluateJavascriptWithResponse(message: message) { result in
+        evaluateJavascriptWithResponse(message: message, waitUntilSessionStarted: false) { result in
             switch result {
             case .success(_):
+//                self.isStartSessionProcessed = true
                 completion(.success(()))
             case .failure(let error):
                 completion(.failure(error))
@@ -349,14 +350,6 @@ class ChaportWebViewController: UIViewController, WKScriptMessageHandler, WKNavi
     func startBot(botId: String, timestamp: Double) {
         let payload: [String: Any] = ["id": botId, "timestamp": timestamp]
         let message: [String: Any] = ["action": "startBot", "payload": payload]
-        evaluateJavaScript(message: message) { _ in }
-    }
-    
-    func canStartBot(botId: String?, completion: @escaping (Bool) -> Void) {
-        var message: [String: Any] = ["action": "canStartBot"]
-        if let botId = botId {
-            message["payload"] = ["botId": botId]
-        }
         evaluateJavaScript(message: message) { _ in }
     }
     

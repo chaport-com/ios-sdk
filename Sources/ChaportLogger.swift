@@ -12,6 +12,6 @@ struct ChaportLogger {
     /// Log a message at a specific level
     @MainActor public static func log(_ message: String, level: ChaportLogLevel) {
         guard level >= minimumLevel else { return }
-        print("\(level.description): \(message)")
+        print("Chaport SDK (\(level.description)): \(message)")
     }
 }

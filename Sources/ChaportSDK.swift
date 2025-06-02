@@ -200,7 +200,9 @@ public class ChaportSDK: NSObject {
         self.visitorData = visitor
         self.hashStr = hash
         
-        webViewController?.setVisitorData(visitorData: visitor, hash: hash)
+        if webViewController?.isStartSessionProcessed == true { // visitor data stored at self is sent automatically immediately after startSession is processed
+            webViewController?.setVisitorData(visitorData: visitor, hash: hash)
+        }
     }
     
     /// Отображение чата (модально)
@@ -351,8 +353,10 @@ public class ChaportSDK: NSObject {
 
         self.startedBotId = botId
         self.startedBotTimestamp = timestamp
-
-        webViewController?.startBot(botId: botId, timestamp: timestamp)
+        
+        if webViewController?.isStartSessionProcessed == true { // bot data stored at self is sent automatically immediately after startSession is processed
+            webViewController?.startBot(botId: botId, timestamp: timestamp)
+        }
     }
     
     /// Открытие главной страницы FAQ
@@ -427,12 +431,20 @@ public class ChaportSDK: NSObject {
                     payload["payload"] = botId
                 }
 
-                self.webViewController?.evaluateJavascriptWithResponse(message: ["action": "canStartBot", "payload": ["botId": botId]]) { result in
+                self.webViewController?.evaluateJavascriptWithResponse(message: ["action": "canStartBot", "payload": botId ?? NSNull()]) { result in
+//                    print("canStartBot: \(botId) => \(result)")
                     switch result {
                     case .success(let value):
-                        let canStart = value as? Int ?? 0
+                        guard
+                            let dict = value as? [String: Any],
+                            let canStart = dict["canStart"] as? Bool
+                        else {
+                            ChaportLogger.log("canStartBot method returned response malformed response", level: .warning)
+                            completion(.failure(ChaportSDKError.invalidResponse))
+                            return
+                        }
                         
-                        completion(.success(canStart == 1 ? true : false))
+                        completion(.success(canStart))
                     case .failure(let error):
                         completion(.failure(error))
                     }
@@ -446,28 +458,6 @@ public class ChaportSDK: NSObject {
     @MainActor public func setLogLevel(level: ChaportLogLevel) {
         ChaportLogger.setLogLevel(level)
     }
-    
-//    @MainActor private func sendMessageToWebView(action: String, data: [String: Any], completion: @escaping (Result<Any, Error>) -> Void) {
-//        if !isSessionStarted() {
-//            completion(.failure(ChaportSDKError.webViewNotLoaded))
-//            return
-//        }
-//        guard let webVC = webViewController else {
-//            completion(.failure(ChaportSDKError.webViewNotLoaded))
-//            return
-//        }
-//        
-//        let requestId = UUID().uuidString
-//        var message = data
-//        message["requestId"] = requestId
-//        message["action"] = action
-//        
-//        pendingRequestCompletions[requestId] = completion
-//
-//        webVC.evaluateJavaScript(message: message) { _ in }
-//    }
-    
-    // MARK: - Внутренние методы
     
     private func getTopViewController(from base: UIViewController? = {
         // iOS 13+ safe access to the topmost window's root view controller
@@ -650,7 +640,7 @@ extension ChaportSDK: ChaportWebViewControllerDelegate {
             
         case "emit":
             if let event = payload["name"] as? String {
-//                print("Event: \(event)")
+//                print("Event: \(event) \(data)")
                 
                 switch event {
                 case "chat.dismiss":
