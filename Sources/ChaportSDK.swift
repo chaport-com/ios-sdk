@@ -141,7 +141,12 @@ public class ChaportSDK: NSObject {
     }
     
     /// Настройка SDK
+    @MainActor
     public func configure(config: ChaportConfig) {
+        if (self.config != nil && isSessionStarted()) {
+            ChaportLogger.log("Unable to re-configure after session has already been started", level: .warning)
+            return;
+        }
         self.config = config
     }
     
