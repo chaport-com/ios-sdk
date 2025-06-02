@@ -13,8 +13,8 @@ public enum ChaportSDKError: Error {
 }
 
 public class ChaportSDK: NSObject {
-    
     @MainActor public static let shared = ChaportSDK()
+    public static let version = "1.0.21"
     public weak var delegate: ChaportSDKDelegate?
     private var _isSessionStarted: Bool = false
 //    private var _isChatVisible: Bool = false
@@ -46,7 +46,19 @@ public class ChaportSDK: NSObject {
         let domain: String
         
         switch config["region"] ?? "eu" {
-          case "us", "eu", "au", "br", "ph":
+          case "us":
+            domain = "app.chaport.com"
+            break
+          case "eu":
+            domain = "app.chaport.com"
+            break
+          case "au":
+            domain = "app.chaport.com"
+            break
+          case "br":
+            domain = "app.chaport.com"
+            break
+          case "ph":
             domain = "app.chaport.com"
             break
           case "ru":

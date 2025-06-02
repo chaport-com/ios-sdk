@@ -131,7 +131,7 @@ class ChaportWebViewController: UIViewController, WKScriptMessageHandler, WKNavi
         let config = WKWebViewConfiguration()
         config.userContentController = contentController
         
-        let sdkVersion = "1.0.9"
+        let sdkVersion = ChaportSDK.version
         let iosVersion = UIDevice.current.systemVersion
         config.applicationNameForUserAgent = "Chaport SDK \(sdkVersion) iOS \(iosVersion)"
         
@@ -184,6 +184,9 @@ class ChaportWebViewController: UIViewController, WKScriptMessageHandler, WKNavi
 
         loadViewIfNeeded()
         webViewInstance.navigationDelegate = self
+        webViewInstance.isOpaque = false
+        webViewInstance.backgroundColor = .clear
+        webViewInstance.scrollView.backgroundColor = .clear
 
         let request = URLRequest(url: webViewURL)
         webViewInstance.load(request)

@@ -1,39 +1,76 @@
-# ChaportSDK — Полная документация
+# Chaport Live Chat SDK for iOS
 
-## 1. Введение
+## Requirements
 
-ChaportSDK — это iOS SDK для онлайн-чата Chaport, позволяющий клиентам интегрировать чат в свои iOS-приложения без кнопок, всплывающих окон и т.д.  
-SDK разработан на Swift, использует WKWebView для загрузки чата и взаимодействует с JS API Chaport через WKScriptMessageHandler и evaluateJavaScript.  
-Поддерживается как UIKit, так и SwiftUI (iOS 12+).
+* iOS 15.6+
+* Swift 5
+* Xcode 13.4+
 
-## 2. Установка
+## Installation
 
-### Swift Package Manager
+### 1. Install Chaport Live Chat SDK to your iOS app
 
-1. Откройте проект в Xcode (минимум Xcode 11).
-2. В меню **File → Swift Packages → Add Package Dependency...**
-3. Укажите URL репозитория или локальный путь к ChaportSDK (где лежит `Package.swift`).
-4. Выберите продукт `ChaportSDK`.
+#### 1.1 Using Cocoapods
 
-### CocoaPods
+Add Chaport to your Podfile like this:
 
-Добавьте следующую строку в ваш Podfile:
+```
+use_frameworks!
 
-pod 'ChaportSDK'
+target :YourApp do
+  pod 'Chaport', '~> 1'
+end
+```
 
-### Ручная установка
+Then run `pod install`.
 
-Скопируйте папку `Sources/ChaportSDK` в свой проект, а затем подключите исходники в **Build Settings** → **Compile Sources**.
+See [Example-Swift](Examples/Example-Swift/) app for a CocoaPods example.
 
-## 3. Использование
+#### 1.2 Using Swift Package Manager
 
-## 3.1 Инициализация и конфигурация
+Add Chaport to your app in Xcode:
+1. Open `File` → `Add Package Dependencies...`.
+2. Enter `https://github.com/chaport-com/ios-sdk` in a search input and press `Enter`.
+3. Select the `ios-sdk` package and click the `Add package` button.
+4. Click the `Add package` button again.
 
-Перед использованием вызовите метод configure(config:), передав объект Config:
+See [Example-SwiftUI](Examples/Example-SwiftUI/) app for an SPM example.
 
-let sessionData: [String: Any] = ["persist": true]
-let config = Config(appId: "your_app_id", session: sessionData, region: "ru")
+#### 1.3 Manually
+
+##### Swift
+
+Simply copy files from Sources directory into your project.
+
+##### Objective-C
+
+TBD
+
+### 2. Update your Info.plist
+
+To enable your users to take and upload photos to the chat as well as download photos to their photo library, add these properties to your Info.plist file:
+
+* `Privacy - Camera Usage Description` [NSCameraUsageDescription](https://developer.apple.com/documentation/bundleresources/information-property-list/nscamerausagedescription)
+* `Privacy - Photo Library Usage Description` [NSPhotoLibraryUsageDescription](https://developer.apple.com/documentation/bundleresources/information-property-list/nsphotolibraryusagedescription) or `Privacy - Photo Library Additions Usage Description` [NSPhotoLibraryAddUsageDescription](https://developer.apple.com/documentation/bundleresources/information-property-list/nsphotolibraryaddusagedescription)
+
+### 3. Configure Chaport Live Chat SDK
+
+TBD retrieve appId, configure and present/embed examples
+
+### 4. Enable Push Notifications (Optional)
+
+## Usage
+
+### Initialization
+
+```
+import Chaport
+
+let config = Config(appId: "your_app_id")
 ChaportSDK.shared.configure(config: config)
+```
+
+### 
 
 ## 3.2 Отображение чата
 
