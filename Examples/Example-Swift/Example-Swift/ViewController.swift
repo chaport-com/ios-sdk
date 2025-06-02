@@ -47,7 +47,6 @@ class ViewController: UIViewController, ChaportSDKDelegate {
     
     func chatDidStart() {
         print("chatDidStart")
-        self.updateRemoveButtonColor()
         
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
             if granted {
@@ -72,7 +71,6 @@ class ViewController: UIViewController, ChaportSDKDelegate {
     
     func chatDidFail(error: Error) {
         print("Chat did fail: \(error)")
-        self.updateRemoveButtonColor()
     }
     
     func unreadMessageDidChange(unreadCount: Int, lastMessage: String?) {
@@ -80,14 +78,15 @@ class ViewController: UIViewController, ChaportSDKDelegate {
         print("Chat unreadMessageDidChange, unreadCount: \(unreadCount), lastMessage: \(lastMessage ?? "")")
     }
     
-    func linkDidClick(url: URL) {
+    func linkDidClick(url: URL) -> WebViewLinkAction {
         print("Chat did click link: \(url)")
-        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        return .allow
+//        UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     
     private func setup() {
-        var config = Config(appId: "07da6b4daf891330f3354098")
-        config["region"] = "ru"
+        var config = Config(appId: "0368d2dbb2abcef0d9facafa")
+
         ChaportSDK.shared.delegate = self
         ChaportSDK.shared.configure(config: config)
         
