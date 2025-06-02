@@ -29,7 +29,7 @@ public class ChaportSDK: NSObject {
         }
     }
     
-    private var config: Config?
+    private var config: ChaportConfig?
     private var visitorData: ChaportVisitorData?
     private var details: ChaportUserDetails?
     private var hashStr: String?
@@ -141,7 +141,7 @@ public class ChaportSDK: NSObject {
     }
     
     /// Настройка SDK
-    public func configure(config: Config) {
+    public func configure(config: ChaportConfig) {
         self.config = config
     }
     
