@@ -85,7 +85,7 @@ class ViewController: UIViewController, ChaportSDKDelegate {
     }
     
     private func setup() {
-        var config = Config(appId: "0368d2dbb2abcef0d9facafa")
+        var config = Config(appId: "<appId>")
 
         ChaportSDK.shared.delegate = self
         ChaportSDK.shared.configure(config: config)

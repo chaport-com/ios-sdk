@@ -17,7 +17,7 @@ class ChatViewModel: NSObject, ObservableObject {
     }
 
     private func setupSDK() {
-        let config = Config(appId: "0368d2dbb2abcef0d9facafa")
+        let config = Config(appId: "<appId>")
 
         ChaportSDK.shared.delegate = self
         ChaportSDK.shared.configure(config: config)
