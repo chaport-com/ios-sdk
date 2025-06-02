@@ -78,14 +78,14 @@ class ViewController: UIViewController, ChaportSDKDelegate {
         print("Chat unreadMessageDidChange, unreadCount: \(unreadCount), lastMessage: \(lastMessage ?? "")")
     }
     
-    func linkDidClick(url: URL) -> WebViewLinkAction {
+    func linkDidClick(url: URL) -> ChaportLinkAction {
         print("Chat did click link: \(url)")
         return .allow
 //        UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     
     private func setup() {
-        var config = Config(appId: "<appId>")
+        var config = ChaportConfig(appId: "<appId>")
 
         ChaportSDK.shared.delegate = self
         ChaportSDK.shared.configure(config: config)
@@ -95,7 +95,7 @@ class ViewController: UIViewController, ChaportSDKDelegate {
     
     private func setupVisitor() {
         ChaportSDK.shared.startSession()
-        ChaportSDK.shared.setVisitorData(visitor: VisitorData(name: "Test SDK visitor"))
+        ChaportSDK.shared.setVisitorData(visitor: ChaportVisitorData(name: "Test SDK visitor"))
     }
     
     private func updateUnreadLabel() {

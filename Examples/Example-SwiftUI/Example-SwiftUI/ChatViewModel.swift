@@ -17,7 +17,7 @@ class ChatViewModel: NSObject, ObservableObject {
     }
 
     private func setupSDK() {
-        let config = Config(appId: "<appId>")
+        let config = ChaportConfig(appId: "<appId>")
 
         ChaportSDK.shared.delegate = self
         ChaportSDK.shared.configure(config: config)
@@ -27,7 +27,7 @@ class ChatViewModel: NSObject, ObservableObject {
     
     private func setupVisitor() {
         ChaportSDK.shared.startSession()
-        ChaportSDK.shared.setVisitorData(visitor: VisitorData(name: "Test SDK visitor"))
+        ChaportSDK.shared.setVisitorData(visitor: ChaportVisitorData(name: "Test SDK visitor"))
     }
 
     func clearSession() {
@@ -96,7 +96,7 @@ extension ChatViewModel: ChaportSDKDelegate {
         print("Chat failed: \(error.localizedDescription)")
     }
 
-    nonisolated func linkDidClick(url: URL) -> WebViewLinkAction {
+    nonisolated func linkDidClick(url: URL) -> ChaportLinkAction {
         print("Clicked link: \(url)")
         return .allow
     }
