@@ -185,8 +185,8 @@ class ChaportWebViewController: UIViewController, WKScriptMessageHandler, WKNavi
         loadViewIfNeeded()
         webViewInstance.navigationDelegate = self
         webViewInstance.isOpaque = false
-        webViewInstance.backgroundColor = .clear
-        webViewInstance.scrollView.backgroundColor = .clear
+        webViewInstance.backgroundColor = .white
+        webViewInstance.scrollView.backgroundColor = .white
 
         let request = URLRequest(url: webViewURL)
         webViewInstance.load(request)
