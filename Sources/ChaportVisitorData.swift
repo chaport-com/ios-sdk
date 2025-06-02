@@ -1,6 +1,6 @@
 import Foundation
 
-public struct VisitorData {
+public struct ChaportVisitorData {
     public let name: String?
     public let email: String?
     public let phone: String?
@@ -22,7 +22,7 @@ public struct VisitorData {
     }
 }
 
-extension VisitorData {
+extension ChaportVisitorData {
     var asDictionary: [String: Any] {
         var dict: [String: Any] = [:]
         if let name = name {

@@ -30,8 +30,8 @@ public class ChaportSDK: NSObject {
     }
     
     private var config: Config?
-    private var visitorData: VisitorData?
-    private var details: UserDetails?
+    private var visitorData: ChaportVisitorData?
+    private var details: ChaportUserDetails?
     private var hashStr: String?
     private var languageCode: String?
     private var deviceToken: String?
@@ -116,14 +116,14 @@ public class ChaportSDK: NSObject {
     
     // MARK: - Публичные методы
     
-    @MainActor public func startSession(details: UserDetails? = nil) {
+    @MainActor public func startSession(details: ChaportUserDetails? = nil) {
         if isSessionStarted() {
-            Logger.log("Session has already been started", level: .warning)
+            ChaportLogger.log("Session has already been started", level: .warning)
             return;
         }
         
         guard let _ = config else {
-            Logger.log("You must call configure() before startSession()", level: .error)
+            ChaportLogger.log("You must call configure() before startSession()", level: .error)
             return
         }
         
@@ -153,7 +153,7 @@ public class ChaportSDK: NSObject {
     /// Завершение сессии и удаление WebView
     @MainActor public func stopSession(clearCache: Bool = true, completion: @escaping () -> Void = {}) {
         if !isSessionStarted() {
-            Logger.log("Unable to stop session that hasn't been started", level: .warning)
+            ChaportLogger.log("Unable to stop session that hasn't been started", level: .warning)
             completion()
             return
         }
@@ -189,7 +189,7 @@ public class ChaportSDK: NSObject {
     
     /// Передача данных посетителя
     @MainActor
-    public func setVisitorData(visitor: VisitorData, hash: String? = nil) {
+    public func setVisitorData(visitor: ChaportVisitorData, hash: String? = nil) {
         self.visitorData = visitor
         self.hashStr = hash
         
@@ -199,7 +199,7 @@ public class ChaportSDK: NSObject {
     /// Отображение чата (модально)
     @MainActor public func present(from viewController: UIViewController? = nil, completion: @escaping () -> Void = {}) {
         if !isSessionStarted() {
-            Logger.log("You must call startSession() before using present()", level: .warning)
+            ChaportLogger.log("You must call startSession() before using present()", level: .warning)
             return
         }
         
@@ -244,7 +244,7 @@ public class ChaportSDK: NSObject {
     /// Встраивание чата (embed) в заданный containerView
     @MainActor public func embed(into containerView: UIView, parentViewController: UIViewController) {
         if !isSessionStarted() {
-            Logger.log("You must call startSession() before using embed()", level: .warning)
+            ChaportLogger.log("You must call startSession() before using embed()", level: .warning)
             return
         }
         
@@ -280,7 +280,7 @@ public class ChaportSDK: NSObject {
     /// Скрытие чата, открытого через present()
     @MainActor public func dismiss() {
         if !isSessionStarted() {
-            Logger.log("You must call startSession() before using dismiss()", level: .warning)
+            ChaportLogger.log("You must call startSession() before using dismiss()", level: .warning)
             return
         }
         if let webVC = webViewController {
@@ -299,7 +299,7 @@ public class ChaportSDK: NSObject {
     /// Удаление встроенного чата (embed)
     @MainActor public func remove() {
         if !isSessionStarted() {
-            Logger.log("You must call startSession() before using remove()", level: .warning)
+            ChaportLogger.log("You must call startSession() before using remove()", level: .warning)
             return
         }
         if let webVC = webViewController {
@@ -326,7 +326,7 @@ public class ChaportSDK: NSObject {
     /// Запуск чат-бота
     @MainActor public func startBot(botId: String) {
         if !isSessionStarted() {
-            Logger.log("You must call startSession() before using startBot()", level: .warning)
+            ChaportLogger.log("You must call startSession() before using startBot()", level: .warning)
             return
         }
         
@@ -341,7 +341,7 @@ public class ChaportSDK: NSObject {
     /// Открытие главной страницы FAQ
     @MainActor public func openFAQ() {
         if !isSessionStarted() {
-            Logger.log("You must call startSession() before using openFAQ()", level: .warning)
+            ChaportLogger.log("You must call startSession() before using openFAQ()", level: .warning)
             return
         }
         guard let webVC = webViewController else {
@@ -355,7 +355,7 @@ public class ChaportSDK: NSObject {
     /// Открытие статьи FAQ
     @MainActor public func openFAQArticle(articleSlug: String) {
         if !isSessionStarted() {
-            Logger.log("You must call startSession() before using openFAQArticle()", level: .warning)
+            ChaportLogger.log("You must call startSession() before using openFAQArticle()", level: .warning)
             return
         }
         webViewController?.openFAQArticle(articleSlug: articleSlug)
@@ -418,8 +418,8 @@ public class ChaportSDK: NSObject {
         }
     }
     
-    @MainActor public func setLogLevel(level: LogLevel) {
-        Logger.setLogLevel(level)
+    @MainActor public func setLogLevel(level: ChaportLogLevel) {
+        ChaportLogger.setLogLevel(level)
     }
     
 //    @MainActor private func sendMessageToWebView(action: String, data: [String: Any], completion: @escaping (Result<Any, Error>) -> Void) {
@@ -607,7 +607,7 @@ public class ChaportSDK: NSObject {
 // MARK: - ChaportWebViewControllerDelegate
 
 extension ChaportSDK: ChaportWebViewControllerDelegate {
-    public func webViewLinkClicked(url: URL) -> WebViewLinkAction {
+    public func webViewLinkClicked(url: URL) -> ChaportLinkAction {
         return delegate?.linkDidClick?(url: url) ?? .allow
     }
     public func webViewDidReceiveMessage(_ message: [String : Any]) {

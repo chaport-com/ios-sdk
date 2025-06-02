@@ -6,5 +6,5 @@ import Foundation
     @objc optional func chatDidDismiss()
     @objc optional func chatDidFail(error: Error)
     @objc optional func unreadMessageDidChange(unreadCount: Int, lastMessage: String?)
-    @objc optional func linkDidClick(url: URL) -> WebViewLinkAction
+    @objc optional func linkDidClick(url: URL) -> ChaportLinkAction
 }

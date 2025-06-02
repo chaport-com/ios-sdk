@@ -7,36 +7,34 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		73488D502DE4751400223F18 /* UserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73488D4C2DE4751400223F18 /* UserDetails.swift */; };
-		73488D512DE4751400223F18 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73488D4B2DE4751400223F18 /* Session.swift */; };
+		73488D502DE4751400223F18 /* ChaportUserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73488D4C2DE4751400223F18 /* ChaportUserDetails.swift */; };
+		73488D512DE4751400223F18 /* ChaportSessionConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73488D4B2DE4751400223F18 /* ChaportSessionConfig.swift */; };
 		73488D522DE4751400223F18 /* ChaportSDKDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73488D442DE4751400223F18 /* ChaportSDKDelegate.swift */; };
-		73488D532DE4751400223F18 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73488D482DE4751400223F18 /* Logger.swift */; };
+		73488D532DE4751400223F18 /* ChaportLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73488D482DE4751400223F18 /* ChaportLogger.swift */; };
 		73488D542DE4751400223F18 /* ChaportSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73488D432DE4751400223F18 /* ChaportSDK.swift */; };
 		73488D552DE4751400223F18 /* ChaportWebViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73488D462DE4751400223F18 /* ChaportWebViewDataSource.swift */; };
-		73488D562DE4751400223F18 /* VisitorData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73488D4D2DE4751400223F18 /* VisitorData.swift */; };
-		73488D572DE4751400223F18 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73488D472DE4751400223F18 /* Config.swift */; };
-		73488D582DE4751400223F18 /* ChaportPushPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73488D422DE4751400223F18 /* ChaportPushPayload.swift */; };
+		73488D562DE4751400223F18 /* ChaportVisitorData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73488D4D2DE4751400223F18 /* ChaportVisitorData.swift */; };
+		73488D572DE4751400223F18 /* ChaportConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73488D472DE4751400223F18 /* ChaportConfig.swift */; };
 		73488D592DE4751400223F18 /* ChaportWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73488D452DE4751400223F18 /* ChaportWebViewController.swift */; };
-		73488D5A2DE4751400223F18 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73488D4A2DE4751400223F18 /* Message.swift */; };
-		73488D5B2DE4751400223F18 /* LogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73488D492DE4751400223F18 /* LogLevel.swift */; };
-		73488D5C2DE4751400223F18 /* WebViewTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73488D4E2DE4751400223F18 /* WebViewTypes.swift */; };
+		73488D5A2DE4751400223F18 /* ChaportUnreadDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73488D4A2DE4751400223F18 /* ChaportUnreadDetails.swift */; };
+		73488D5B2DE4751400223F18 /* ChaportLogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73488D492DE4751400223F18 /* ChaportLogLevel.swift */; };
+		73488D5C2DE4751400223F18 /* ChaportLinkAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73488D4E2DE4751400223F18 /* ChaportLinkAction.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		73488D372DE474E600223F18 /* Chaport.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Chaport.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		73488D422DE4751400223F18 /* ChaportPushPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaportPushPayload.swift; sourceTree = "<group>"; };
 		73488D432DE4751400223F18 /* ChaportSDK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaportSDK.swift; sourceTree = "<group>"; };
 		73488D442DE4751400223F18 /* ChaportSDKDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaportSDKDelegate.swift; sourceTree = "<group>"; };
 		73488D452DE4751400223F18 /* ChaportWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaportWebViewController.swift; sourceTree = "<group>"; };
 		73488D462DE4751400223F18 /* ChaportWebViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaportWebViewDataSource.swift; sourceTree = "<group>"; };
-		73488D472DE4751400223F18 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
-		73488D482DE4751400223F18 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
-		73488D492DE4751400223F18 /* LogLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogLevel.swift; sourceTree = "<group>"; };
-		73488D4A2DE4751400223F18 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
-		73488D4B2DE4751400223F18 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
-		73488D4C2DE4751400223F18 /* UserDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetails.swift; sourceTree = "<group>"; };
-		73488D4D2DE4751400223F18 /* VisitorData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisitorData.swift; sourceTree = "<group>"; };
-		73488D4E2DE4751400223F18 /* WebViewTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewTypes.swift; sourceTree = "<group>"; };
+		73488D472DE4751400223F18 /* ChaportConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaportConfig.swift; sourceTree = "<group>"; };
+		73488D482DE4751400223F18 /* ChaportLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaportLogger.swift; sourceTree = "<group>"; };
+		73488D492DE4751400223F18 /* ChaportLogLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaportLogLevel.swift; sourceTree = "<group>"; };
+		73488D4A2DE4751400223F18 /* ChaportUnreadDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaportUnreadDetails.swift; sourceTree = "<group>"; };
+		73488D4B2DE4751400223F18 /* ChaportSessionConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaportSessionConfig.swift; sourceTree = "<group>"; };
+		73488D4C2DE4751400223F18 /* ChaportUserDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaportUserDetails.swift; sourceTree = "<group>"; };
+		73488D4D2DE4751400223F18 /* ChaportVisitorData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaportVisitorData.swift; sourceTree = "<group>"; };
+		73488D4E2DE4751400223F18 /* ChaportLinkAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaportLinkAction.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,19 +67,18 @@
 		73488D4F2DE4751400223F18 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				73488D422DE4751400223F18 /* ChaportPushPayload.swift */,
 				73488D432DE4751400223F18 /* ChaportSDK.swift */,
 				73488D442DE4751400223F18 /* ChaportSDKDelegate.swift */,
 				73488D452DE4751400223F18 /* ChaportWebViewController.swift */,
 				73488D462DE4751400223F18 /* ChaportWebViewDataSource.swift */,
-				73488D472DE4751400223F18 /* Config.swift */,
-				73488D482DE4751400223F18 /* Logger.swift */,
-				73488D492DE4751400223F18 /* LogLevel.swift */,
-				73488D4A2DE4751400223F18 /* Message.swift */,
-				73488D4B2DE4751400223F18 /* Session.swift */,
-				73488D4C2DE4751400223F18 /* UserDetails.swift */,
-				73488D4D2DE4751400223F18 /* VisitorData.swift */,
-				73488D4E2DE4751400223F18 /* WebViewTypes.swift */,
+				73488D472DE4751400223F18 /* ChaportConfig.swift */,
+				73488D482DE4751400223F18 /* ChaportLogger.swift */,
+				73488D492DE4751400223F18 /* ChaportLogLevel.swift */,
+				73488D4A2DE4751400223F18 /* ChaportUnreadDetails.swift */,
+				73488D4B2DE4751400223F18 /* ChaportSessionConfig.swift */,
+				73488D4C2DE4751400223F18 /* ChaportUserDetails.swift */,
+				73488D4D2DE4751400223F18 /* ChaportVisitorData.swift */,
+				73488D4E2DE4751400223F18 /* ChaportLinkAction.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -167,19 +164,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				73488D502DE4751400223F18 /* UserDetails.swift in Sources */,
-				73488D512DE4751400223F18 /* Session.swift in Sources */,
+				73488D502DE4751400223F18 /* ChaportUserDetails.swift in Sources */,
+				73488D512DE4751400223F18 /* ChaportSessionConfig.swift in Sources */,
 				73488D522DE4751400223F18 /* ChaportSDKDelegate.swift in Sources */,
-				73488D532DE4751400223F18 /* Logger.swift in Sources */,
+				73488D532DE4751400223F18 /* ChaportLogger.swift in Sources */,
 				73488D542DE4751400223F18 /* ChaportSDK.swift in Sources */,
 				73488D552DE4751400223F18 /* ChaportWebViewDataSource.swift in Sources */,
-				73488D562DE4751400223F18 /* VisitorData.swift in Sources */,
-				73488D572DE4751400223F18 /* Config.swift in Sources */,
-				73488D582DE4751400223F18 /* ChaportPushPayload.swift in Sources */,
+				73488D562DE4751400223F18 /* ChaportVisitorData.swift in Sources */,
+				73488D572DE4751400223F18 /* ChaportConfig.swift in Sources */,
 				73488D592DE4751400223F18 /* ChaportWebViewController.swift in Sources */,
-				73488D5A2DE4751400223F18 /* Message.swift in Sources */,
-				73488D5B2DE4751400223F18 /* LogLevel.swift in Sources */,
-				73488D5C2DE4751400223F18 /* WebViewTypes.swift in Sources */,
+				73488D5A2DE4751400223F18 /* ChaportUnreadDetails.swift in Sources */,
+				73488D5B2DE4751400223F18 /* ChaportLogLevel.swift in Sources */,
+				73488D5C2DE4751400223F18 /* ChaportLinkAction.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

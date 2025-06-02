@@ -1,12 +1,12 @@
 import Foundation
 
-public struct Config {
+public struct ChaportConfig {
     public var appId: String
-    public var session: Session?
+    public var session: ChaportSessionConfig?
     
     private var storage: [String: String] = [:]
 
-    public init(appId: String, session: Session? = nil) {
+    public init(appId: String, session: ChaportSessionConfig? = nil) {
         self.appId = appId
         self.session = session
     }

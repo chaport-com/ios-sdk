@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Session {
+public struct ChaportSessionConfig {
     public let persist: Bool
     
     public init(persist: Bool) {

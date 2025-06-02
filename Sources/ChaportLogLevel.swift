@@ -1,6 +1,6 @@
 import Foundation
 
-public enum LogLevel: Int, Comparable {
+public enum ChaportLogLevel: Int, Comparable {
     case debug = 0
     case info
     case warning
@@ -15,7 +15,7 @@ public enum LogLevel: Int, Comparable {
         }
     }
 
-    public static func < (lhs: LogLevel, rhs: LogLevel) -> Bool {
+    public static func < (lhs: ChaportLogLevel, rhs: ChaportLogLevel) -> Bool {
         return lhs.rawValue < rhs.rawValue
     }
 }

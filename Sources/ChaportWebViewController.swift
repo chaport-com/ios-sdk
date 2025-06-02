@@ -5,7 +5,7 @@ import UIKit
 @objc public protocol ChaportWebViewControllerDelegate: AnyObject {
     @objc optional func webViewDidReceiveMessage(_ message: [String: Any])
     @objc optional func webViewDidFailToLoad(error: Error)
-    @objc optional func webViewLinkClicked(url: URL) -> WebViewLinkAction
+    @objc optional func webViewLinkClicked(url: URL) -> ChaportLinkAction
 }
 
 class ChaportWebViewController: UIViewController, WKScriptMessageHandler, WKNavigationDelegate {
@@ -164,7 +164,7 @@ class ChaportWebViewController: UIViewController, WKScriptMessageHandler, WKNavi
 //        print("loadWebView 3")
         
         guard let dataSource = self.dataSource else {
-            Logger.log("WebView data source is empty", level: .error)
+            ChaportLogger.log("WebView data source is empty", level: .error)
             completion(.failure(ChaportSDKError.webViewNotLoaded))
             return
         }
@@ -172,7 +172,7 @@ class ChaportWebViewController: UIViewController, WKScriptMessageHandler, WKNavi
 //        print("loadWebView 4")
         
         guard let webViewURL = dataSource.webViewURL else {
-            Logger.log("WebView URL is empty", level: .error)
+            ChaportLogger.log("WebView URL is empty", level: .error)
             completion(.failure(ChaportSDKError.webViewNotLoaded))
             return
         }
@@ -308,7 +308,7 @@ class ChaportWebViewController: UIViewController, WKScriptMessageHandler, WKNavi
         evaluateJavaScript(message: message) { _ in }
     }
 
-    func setVisitorData(visitorData: VisitorData, hash: String? = nil) {
+    func setVisitorData(visitorData: ChaportVisitorData, hash: String? = nil) {
         var visitorPayload: [String: Any] = [:]
         
         if let name = visitorData.name {
