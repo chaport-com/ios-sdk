@@ -18,6 +18,7 @@ public class ChaportSDK: NSObject {
     public weak var delegate: ChaportSDKDelegate?
     private var _isSessionStarted: Bool = false
 //    private var _isChatVisible: Bool = false
+    private var _isChatPresented: Bool = false
     private var _isChatVisible: Bool = false {
         didSet {
             guard oldValue != _isChatVisible else { return }
@@ -28,6 +29,7 @@ public class ChaportSDK: NSObject {
             }
         }
     }
+
     
     private var config: ChaportConfig?
     private var visitorData: ChaportVisitorData?
@@ -236,6 +238,7 @@ public class ChaportSDK: NSObject {
 //                print("Will present 5");
                 presentingVC?.present(webVC, animated: true) {
 //                    print("Will present 6");
+                    self._isChatPresented = true
                     self._isChatVisible = true
                     
                     webVC.setClosable(isClosable: true)
@@ -275,9 +278,8 @@ public class ChaportSDK: NSObject {
             webVC.didMove(toParent: parentViewController)
             
             self._isChatVisible = true
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-//                webVC.setClosable(isClosable: false)
-            }
+            self._isChatPresented = false
+
             webVC.setClosable(isClosable: false)
         }
     }
@@ -288,15 +290,21 @@ public class ChaportSDK: NSObject {
             ChaportLogger.log("You must call startSession() before using dismiss()", level: .warning)
             return
         }
+        if isChatEmbedded() {
+            ChaportLogger.log("Called .dismiss() for embedded chat, doing .remove() instead", level: .info)
+            return remove()
+        }
         if let webVC = webViewController {
             if webVC.presentingViewController != nil {
                 webVC.dismiss(animated: true) { [weak self] in
 //                    self?.delegate?.chatDidDismiss()
                     self?._isChatVisible = false
+                    self?._isChatPresented = false
                 }
             } else {
 //                self.delegate?.chatDidDismiss()
                 self._isChatVisible = false
+                self._isChatPresented = false
             }
         }
     }
@@ -306,6 +314,10 @@ public class ChaportSDK: NSObject {
         if !isSessionStarted() {
             ChaportLogger.log("You must call startSession() before using remove()", level: .warning)
             return
+        }
+        if isChatPresented() {
+            ChaportLogger.log("Called .remove() for presented chat, doing .dismiss() instead", level: .info)
+            return dismiss()
         }
         if let webVC = webViewController {
 //            if !webVC.isChatVisible { return }
@@ -369,6 +381,14 @@ public class ChaportSDK: NSObject {
     @MainActor public func isChatVisible() -> Bool {
 //        return self.webViewController?.isChatVisible ?? false
         return self._isChatVisible;
+    }
+    
+    @MainActor public func isChatPresented() -> Bool {
+        return self._isChatVisible && self._isChatPresented;
+    }
+    
+    @MainActor public func isChatEmbedded() -> Bool {
+        return self._isChatVisible && !self._isChatPresented;
     }
     
     @MainActor public func isSessionStarted() -> Bool {
