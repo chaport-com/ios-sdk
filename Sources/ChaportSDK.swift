@@ -46,8 +46,9 @@ public class ChaportSDK: NSObject {
     internal var webViewURL: URL? {
         guard let config = config else { return nil }
         let domain: String
+        let region = config["region"] ?? "eu"
         
-        switch config["region"] ?? "eu" {
+        switch region {
           case "us":
             domain = "app.chaport.com"
             break
@@ -67,7 +68,10 @@ public class ChaportSDK: NSObject {
             domain = "app.chaport.ru"
             break
           default:
-            fatalError("Unsupported region code: \(config["region"] ?? "eu")")
+            domain = "app.chaport.com"
+            DispatchQueue.main.async {
+                ChaportLogger.log("Unsupported region code: \(region), falling back to 'eu'", level: .warning)
+            }
         }
         
         var components = URLComponents()
@@ -134,10 +138,8 @@ public class ChaportSDK: NSObject {
 //            return
 //        }
 
-        let webVC = ChaportWebViewController(dataSource: self)
-        webVC.delegate = self
+        self.ensureWebViewController()
 
-        self.webViewController = webVC
         self.details = details
         self._isSessionStarted = true
     }
@@ -459,6 +461,15 @@ public class ChaportSDK: NSObject {
         ChaportLogger.setLogLevel(level)
     }
     
+    private func ensureWebViewController() {
+        if (self.webViewController == nil) {
+            let webVC = ChaportWebViewController(dataSource: self)
+            webVC.delegate = self
+
+            self.webViewController = webVC
+        }
+    }
+    
     private func getTopViewController(from base: UIViewController? = {
         // iOS 13+ safe access to the topmost window's root view controller
         let activeScene = UIApplication.shared.connectedScenes
@@ -491,7 +502,7 @@ public class ChaportSDK: NSObject {
     }
 
     private func resetInactivityTimer() {
-        if (webViewController != nil) {
+        if (webViewController == nil) {
             return
         }
 
@@ -512,6 +523,7 @@ public class ChaportSDK: NSObject {
     @MainActor private func ensureWebViewLoaded(waitForLoad: Bool = true, completion: @escaping (Result<Void, Error>) -> Void) {
 //        print("ensureWebViewLoaded 1")
         if isSessionStarted() {
+            self.ensureWebViewController()
             self.resetInactivityTimer()
 //            print("ensureWebViewLoaded 2")
             
@@ -531,7 +543,7 @@ public class ChaportSDK: NSObject {
                 completion(.success(())) // Don't wait for the load
             }
         } else {
-            completion(.failure(ChaportSDKError.webViewNotLoaded))
+            completion(.success(()))
         }
     }
     
@@ -652,11 +664,14 @@ extension ChaportSDK: ChaportWebViewControllerDelegate {
 //                case "session.start":
                     
                 case "chat.denied":
-                    if let payload = message["payload"] as? [String: String] {
-                        let error = ChaportSDKError.chatDenied(payload: payload)
-                        delegate?.chatDidFail?(error: error)
-                        self.remove()
-                    }
+                    let error = ChaportSDKError.chatDenied(payload: data.mapValues { value in
+                        if let string = value as? String {
+                            return string
+                        } else {
+                            return String(describing: value)
+                        }
+                    })
+                    delegate?.chatDidFail?(error: error)
                 case "chat.unreadChange":
                     if let count = data["count"] as? Int {
                         let lastMessage = data["lastMessageText"] as? String
