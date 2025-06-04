@@ -37,11 +37,29 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
         withCompletionHandler completionHandler:
         @escaping (UNNotificationPresentationOptions) -> Void
     ) {
-        // Show banner and play sound even when app is in foreground
-        if #available(iOS 14.0, *) {
-            completionHandler([.banner, .sound])
+        if ChaportSDK.shared.isChaportPushNotification(notification: notification.request) {
+            if (ChaportSDK.shared.isChatVisible()) {
+                completionHandler([])
+            } else {
+                completionHandler([.banner, .sound])
+            }
         } else {
-            completionHandler([.alert, .sound])
+            completionHandler([])
         }
+    }
+    
+    // Called when user taps a push notification
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
+        if ChaportSDK.shared.isChaportPushNotification(notification: response.notification.request) {
+            if (!ChaportSDK.shared.isChatVisible()) {
+                DispatchQueue.main.async {
+                    ChaportSDK.shared.present()
+                }
+            }
+        }
+
+        completionHandler()
     }
 }

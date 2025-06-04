@@ -6,6 +6,7 @@ protocol ChaportWebViewDataSource: AnyObject {
 //    var hashStr: String { get }
     
     func restoreWebView(completion: @escaping (Result<Any?, Error>) -> Void)
+    func getTeamIdAsync(completion: @escaping (String) -> Void)
     func onWebViewDidDisappear()
     
 //    var onRestoreCompleted: (() -> Void)? { get }

@@ -1,8 +1,5 @@
 import Foundation
-//import WebKit
 import UIKit
-//import UserNotifications
-//import CommonCrypto
 
 public enum ChaportSDKError: Error {
     case webViewNotLoaded
@@ -14,10 +11,9 @@ public enum ChaportSDKError: Error {
 
 public class ChaportSDK: NSObject {
     @MainActor public static let shared = ChaportSDK()
-    public static let version = "1.0.21"
+    public static let version = "1.0.22"
     public weak var delegate: ChaportSDKDelegate?
     private var _isSessionStarted: Bool = false
-//    private var _isChatVisible: Bool = false
     private var _isChatPresented: Bool = false
     private var _isChatVisible: Bool = false {
         didSet {
@@ -32,14 +28,14 @@ public class ChaportSDK: NSObject {
 
     
     private var config: ChaportConfig?
-    private var visitorData: ChaportVisitorData?
-    private var details: ChaportUserDetails?
-    private var hashStr: String?
-    private var languageCode: String?
+    private var userDetails: ChaportUserDetails?
     private var deviceToken: String?
+    private var languageCode: String?
     private var startedBotId: String?
     private var startedBotTimestamp: Double?
-//    private var pendingRequestCompletions: [String: (Result<Any, Error>) -> Void] = [:]
+    private var teamId: String?
+    private var visitorData: ChaportVisitorData?
+    private var visitorDataHash: String?
     private var webViewController: ChaportWebViewController?
     private var webViewInactivityTimer: Timer?
     
@@ -120,9 +116,19 @@ public class ChaportSDK: NSObject {
         return components.url
     }
     
-    // MARK: - Публичные методы
+    public func configure(config: ChaportConfig) {
+        if (self.config != nil && isSessionStarted()) {
+            ChaportLogger.log("Unable to re-configure after session has already been started", level: .warning)
+            return;
+        }
+        self.config = config
+    }
     
-    @MainActor public func startSession(details: ChaportUserDetails? = nil) {
+    public func setLanguage(languageCode: String) {
+        self.languageCode = languageCode
+    }
+    
+    public func startSession(details: ChaportUserDetails? = nil) {
         if isSessionStarted() {
             ChaportLogger.log("Session has already been started", level: .warning)
             return;
@@ -132,35 +138,15 @@ public class ChaportSDK: NSObject {
             ChaportLogger.log("You must call configure() before startSession()", level: .error)
             return
         }
-        
-//        guard let url = webViewURL else {
-//            Logger.log("Unable to identify WebView URL", level: .error)
-//            return
-//        }
 
         self.ensureWebViewController()
+        self.getTeamIdAsync() { _ in } // initialize teamId early
 
-        self.details = details
+        self.userDetails = details
         self._isSessionStarted = true
     }
     
-    /// Настройка SDK
-    @MainActor
-    public func configure(config: ChaportConfig) {
-        if (self.config != nil && isSessionStarted()) {
-            ChaportLogger.log("Unable to re-configure after session has already been started", level: .warning)
-            return;
-        }
-        self.config = config
-    }
-    
-    /// Установка языка до старта сессии
-    public func setLanguage(languageCode: String) {
-        self.languageCode = languageCode
-    }
-    
-    /// Завершение сессии и удаление WebView
-    @MainActor public func stopSession(clearCache: Bool = true, completion: @escaping () -> Void = {}) {
+    public func stopSession(clearCache: Bool = true, completion: @escaping () -> Void = {}) {
         if !isSessionStarted() {
             ChaportLogger.log("Unable to stop session that hasn't been started", level: .warning)
             completion()
@@ -196,65 +182,63 @@ public class ChaportSDK: NSObject {
         }
     }
     
-    /// Передача данных посетителя
-    @MainActor
     public func setVisitorData(visitor: ChaportVisitorData, hash: String? = nil) {
         self.visitorData = visitor
-        self.hashStr = hash
+        self.visitorDataHash = hash
         
-        if webViewController?.isStartSessionProcessed == true { // visitor data stored at self is sent automatically immediately after startSession is processed
+        // visitor data stored at self is sent automatically immediately after startSession is processed
+        if webViewController?.isStartSessionProcessed == true {
             webViewController?.setVisitorData(visitorData: visitor, hash: hash)
         }
     }
     
-    /// Отображение чата (модально)
-    @MainActor public func present(from viewController: UIViewController? = nil, completion: @escaping () -> Void = {}) {
+    public func present(from viewController: UIViewController? = nil, completion: @escaping () -> Void = {}) {
         if !isSessionStarted() {
             ChaportLogger.log("You must call startSession() before using present()", level: .warning)
             return
         }
         
-//        print("Will present 1");
-        
-        // TODO load webview
-//        checkSession()
         self.ensureWebViewLoaded(waitForLoad: false) { _ in
-//            print("Will present 2");
-            guard let webVC = self.webViewController else {
-                self.delegate?.chatDidFail?(error: ChaportSDKError.webViewNotLoaded)
-                return
-            }
-            
-            DispatchQueue.main.async { [weak self] in
-//                print("Will present 3");
-                guard let self = self else { return }
-                let presentingVC = viewController ?? self.getTopViewController()
-                guard presentingVC?.view.window != nil else { return }
-                
-//                print("Will present 4");
-                
-                webVC.willMove(toParent: nil)
-                webVC.view.removeFromSuperview()
-                webVC.removeFromParent()
-
-                webVC.modalPresentationStyle = .pageSheet
-                
-//                print("Will present 5");
-                presentingVC?.present(webVC, animated: true) {
-//                    print("Will present 6");
-                    self._isChatPresented = true
-                    self._isChatVisible = true
-                    
-                    webVC.setClosable(isClosable: true)
-                    completion()
-//                    print("Will present 7");
-                }
+            self.presentWhenViewReady(viewController: viewController) {
+                completion()
             }
         }
     }
     
-    /// Встраивание чата (embed) в заданный containerView
-    @MainActor public func embed(into containerView: UIView, parentViewController: UIViewController) {
+    private func presentWhenViewReady(viewController: UIViewController?, priorTries: Int = 0, completion: @escaping () -> Void = {}) {
+        guard let webVC = self.webViewController else {
+            self.delegate?.chatDidFail?(error: ChaportSDKError.webViewNotLoaded)
+            return
+        }
+        
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            let presentingVC = viewController ?? self.getTopViewController()
+            guard presentingVC?.view.window != nil else {
+                if (priorTries > 5) { return }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    self.presentWhenViewReady(viewController: viewController, priorTries: priorTries + 1, completion: completion)
+                }
+                return
+            }
+            
+            webVC.willMove(toParent: nil)
+            webVC.view.removeFromSuperview()
+            webVC.removeFromParent()
+
+            webVC.modalPresentationStyle = .pageSheet
+            
+            presentingVC?.present(webVC, animated: true) {
+                self._isChatPresented = true
+                self._isChatVisible = true
+                
+                webVC.setClosable(isClosable: true)
+                completion()
+            }
+        }
+    }
+    
+    public func embed(into containerView: UIView, parentViewController: UIViewController) {
         if !isSessionStarted() {
             ChaportLogger.log("You must call startSession() before using embed()", level: .warning)
             return
@@ -288,8 +272,7 @@ public class ChaportSDK: NSObject {
         }
     }
     
-    /// Скрытие чата, открытого через present()
-    @MainActor public func dismiss() {
+    public func dismiss() {
         if !isSessionStarted() {
             ChaportLogger.log("You must call startSession() before using dismiss()", level: .warning)
             return
@@ -301,20 +284,17 @@ public class ChaportSDK: NSObject {
         if let webVC = webViewController {
             if webVC.presentingViewController != nil {
                 webVC.dismiss(animated: true) { [weak self] in
-//                    self?.delegate?.chatDidDismiss()
                     self?._isChatVisible = false
                     self?._isChatPresented = false
                 }
             } else {
-//                self.delegate?.chatDidDismiss()
                 self._isChatVisible = false
                 self._isChatPresented = false
             }
         }
     }
     
-    /// Удаление встроенного чата (embed)
-    @MainActor public func remove() {
+    public func remove() {
         if !isSessionStarted() {
             ChaportLogger.log("You must call startSession() before using remove()", level: .warning)
             return
@@ -324,28 +304,23 @@ public class ChaportSDK: NSObject {
             return dismiss()
         }
         if let webVC = webViewController {
-//            if !webVC.isChatVisible { return }
             webVC.willMove(toParent: nil)
             webVC.view.removeFromSuperview()
             webVC.removeFromParent()
             self._isChatVisible = false
-//            delegate?.chatDidDismiss()
         }
     }
     
-    /// Передача токена устройства для push-уведомлений
-    @MainActor public func setDeviceToken(deviceToken: String) {
+    public func setDeviceToken(deviceToken: String) {
         self.deviceToken = deviceToken
         webViewController?.setDeviceToken(token: deviceToken)
     }
     
-    /// Проверка, является ли push-уведомление от Chaport
     public func isChaportPushNotification(notification: UNNotificationRequest) -> Bool {
         return notification.content.userInfo["operator"] != nil
     }
     
-    /// Запуск чат-бота
-    @MainActor public func startBot(botId: String) {
+    public func startBot(botId: String) {
         if !isSessionStarted() {
             ChaportLogger.log("You must call startSession() before using startBot()", level: .warning)
             return
@@ -361,8 +336,7 @@ public class ChaportSDK: NSObject {
         }
     }
     
-    /// Открытие главной страницы FAQ
-    @MainActor public func openFAQ() {
+    public func openFAQ() {
         if !isSessionStarted() {
             ChaportLogger.log("You must call startSession() before using openFAQ()", level: .warning)
             return
@@ -375,8 +349,7 @@ public class ChaportSDK: NSObject {
         webVC.openFAQ()
     }
     
-    /// Открытие статьи FAQ
-    @MainActor public func openFAQArticle(articleSlug: String) {
+    public func openFAQArticle(articleSlug: String) {
         if !isSessionStarted() {
             ChaportLogger.log("You must call startSession() before using openFAQArticle()", level: .warning)
             return
@@ -384,24 +357,23 @@ public class ChaportSDK: NSObject {
         webViewController?.openFAQArticle(articleSlug: articleSlug)
     }
     
-    @MainActor public func isChatVisible() -> Bool {
-//        return self.webViewController?.isChatVisible ?? false
+    public func isChatVisible() -> Bool {
         return self._isChatVisible;
     }
     
-    @MainActor public func isChatPresented() -> Bool {
+    public func isChatPresented() -> Bool {
         return self._isChatVisible && self._isChatPresented;
     }
     
-    @MainActor public func isChatEmbedded() -> Bool {
+    public func isChatEmbedded() -> Bool {
         return self._isChatVisible && !self._isChatPresented;
     }
     
-    @MainActor public func isSessionStarted() -> Bool {
+    public func isSessionStarted() -> Bool {
         return self._isSessionStarted;
     }
     
-    @MainActor public func getUnreadMessage(completion: @escaping (Result<Any?, Error>) -> Void) {
+    public func getUnreadMessage(completion: @escaping (Result<Any?, Error>) -> Void) {
         self.ensureWebViewLoaded() { webviewLoadResult in
             switch webviewLoadResult {
             case .success():
@@ -419,7 +391,7 @@ public class ChaportSDK: NSObject {
         }
     }
 
-    @MainActor public func canStartBot(botId: String? = nil, completion: @escaping (Result<Bool, Error>) -> Void) {
+    public func canStartBot(botId: String? = nil, completion: @escaping (Result<Bool, Error>) -> Void) {
         if !isSessionStarted() {
             completion(.failure(ChaportSDKError.webViewNotLoaded))
             return
@@ -434,7 +406,6 @@ public class ChaportSDK: NSObject {
                 }
 
                 self.webViewController?.evaluateJavascriptWithResponse(message: ["action": "canStartBot", "payload": botId ?? NSNull()]) { result in
-//                    print("canStartBot: \(botId) => \(result)")
                     switch result {
                     case .success(let value):
                         guard
@@ -457,7 +428,7 @@ public class ChaportSDK: NSObject {
         }
     }
     
-    @MainActor public func setLogLevel(level: ChaportLogLevel) {
+    public func setLogLevel(level: ChaportLogLevel) {
         ChaportLogger.setLogLevel(level)
     }
     
@@ -471,7 +442,6 @@ public class ChaportSDK: NSObject {
     }
     
     private func getTopViewController(from base: UIViewController? = {
-        // iOS 13+ safe access to the topmost window's root view controller
         let activeScene = UIApplication.shared.connectedScenes
             .filter { $0.activationState == .foregroundActive }
             .compactMap { $0 as? UIWindowScene }
@@ -483,7 +453,6 @@ public class ChaportSDK: NSObject {
 
         return rootVC
     }()) -> UIViewController? {
-
         if let nav = base as? UINavigationController {
             return getTopViewController(from: nav.visibleViewController)
         }
@@ -520,19 +489,15 @@ public class ChaportSDK: NSObject {
         }
     }
     
-    @MainActor private func ensureWebViewLoaded(waitForLoad: Bool = true, completion: @escaping (Result<Void, Error>) -> Void) {
-//        print("ensureWebViewLoaded 1")
+    private func ensureWebViewLoaded(waitForLoad: Bool = true, completion: @escaping (Result<Void, Error>) -> Void) {
         if isSessionStarted() {
             self.ensureWebViewController()
             self.resetInactivityTimer()
-//            print("ensureWebViewLoaded 2")
             
             if waitForLoad {
                 webViewController?.loadWebView(completion: { result in
-//                    print("ensureWebViewLoaded 3")
                     switch result {
                     case .success():
-//                        print("ensureWebViewLoaded 4")
                         completion(.success(()))
                     case .failure(let error):
                         completion(.failure(error))
@@ -540,7 +505,7 @@ public class ChaportSDK: NSObject {
                 })
             } else {
                 _ = webViewController?.loadWebView(completion: { _ in })
-                completion(.success(())) // Don't wait for the load
+                completion(.success(()))
             }
         } else {
             completion(.success(()))
@@ -608,12 +573,26 @@ public class ChaportSDK: NSObject {
     }
     
     private func getTeamId() -> String? {
-        return getTeamIdViaSecurityFramework() ??
-               getTeamIdFromProvisioningProfile() ??
-               getTeamIdFromAccessGroups()
+        return self.teamId
     }
     
-    @MainActor private func destroyWebView() {
+    internal func getTeamIdAsync(completion: @escaping (String) -> Void) {
+        if let teamId = self.teamId {
+            completion(teamId)
+        } else {
+            DispatchQueue.global(qos: .utility).async {
+                let id = self.getTeamIdViaSecurityFramework() ??
+                    self.getTeamIdFromProvisioningProfile() ??
+                    self.getTeamIdFromAccessGroups() ?? ""
+                DispatchQueue.main.async {
+                    self.teamId = id
+                    completion(id)
+                }
+            }
+        }
+    }
+    
+    private func destroyWebView() {
         guard let webVC = webViewController else {
             return
         }
@@ -631,8 +610,6 @@ public class ChaportSDK: NSObject {
     }
 }
 
-// MARK: - ChaportWebViewControllerDelegate
-
 extension ChaportSDK: ChaportWebViewControllerDelegate {
     public func webViewLinkClicked(url: URL) -> ChaportLinkAction {
         return delegate?.linkDidClick?(url: url) ?? .allow
@@ -642,27 +619,22 @@ extension ChaportSDK: ChaportWebViewControllerDelegate {
         let payload = message["payload"] as? [String : Any] ?? [:]
         let data = (payload["data"] ?? payload) as? [String : Any] ?? [:]
         
-//        print("Action: \(action)")
-//        print("Payload: \(data)")
-        
         switch action {
         case "ack":
-//            print("Received ack \(message["requestId"] as? String), \(action)")
             self.webViewController?.resolvePendingRequest(message: message)
             
         case "emit":
             if let event = payload["name"] as? String {
-//                print("Event: \(event) \(data)")
                 
                 switch event {
                 case "chat.dismiss":
                     dismiss()
+
                 case "chat.start":
                     delegate?.chatDidStart?()
                     self.startedBotId = nil
                     self.startedBotTimestamp = nil
-//                case "session.start":
-                    
+
                 case "chat.denied":
                     let error = ChaportSDKError.chatDenied(payload: data.mapValues { value in
                         if let string = value as? String {
@@ -672,11 +644,13 @@ extension ChaportSDK: ChaportWebViewControllerDelegate {
                         }
                     })
                     delegate?.chatDidFail?(error: error)
+
                 case "chat.unreadChange":
                     if let count = data["count"] as? Int {
                         let lastMessage = data["lastMessageText"] as? String
                         delegate?.unreadMessageDidChange?(unreadCount: count, lastMessage: lastMessage)
                     }
+
                 default:
                     break
                 }
@@ -709,33 +683,26 @@ extension ChaportSDK: ChaportWebViewDataSource {
         self._isChatVisible = false
     }
     func restoreWebView(completion: @escaping (Result<Any?, Error>) -> Void) {
-//        print("restoreWebView 1")
         var payload: [String: Any]? = nil
         
-        if let details = details {
+        if let details = userDetails {
             payload = ["id": details.id, "token": details.token]
         }
         
-//        print("restoreWebView 2")
         self.webViewController?.startSession(payload: payload) { result in
-//            print("restoreWebView 3")
             switch result {
             case .success():
-//                print("Session started successfully")
-//                print("restoreWebView end")
                 if self.visitorData != nil {
-                    self.webViewController?.setVisitorData(visitorData: self.visitorData!, hash: self.hashStr)
+                    self.webViewController?.setVisitorData(visitorData: self.visitorData!, hash: self.visitorDataHash)
                 }
                 if self.startedBotId != nil && self.startedBotTimestamp != nil {
                     self.webViewController?.startBot(botId: self.startedBotId!, timestamp: self.startedBotTimestamp!)
                 }
                 completion(.success(()))
+
             case .failure(let error):
                 completion(.failure(error))
                 break
-//            default:
-//                print("Failed to start session:", error)
-                // Optionally handle error: show alert, retry, etc.
             }
         }
     }

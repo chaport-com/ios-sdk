@@ -1,8 +1,8 @@
 import UIKit
 import Chaport
 
-class ViewController: UIViewController, ChaportSDKDelegate {
-
+class ViewController: UIViewController {
+    
     @IBOutlet weak var chat: UIView!
     @IBOutlet weak var unreadButton: UIButton!
     @IBOutlet weak var removeButton: UIButton!
@@ -43,8 +43,38 @@ class ViewController: UIViewController, ChaportSDKDelegate {
         ChaportSDK.shared.remove()
     }
     
-    // MARK: - ChaportSDKDelegate
+    private func setup() {
+        let config = ChaportConfig(appId: "<appId>")
+        
+        ChaportSDK.shared.delegate = self
+        ChaportSDK.shared.configure(config: config)
+        
+        setupVisitor()
+    }
     
+    private func setupVisitor() {
+        ChaportSDK.shared.startSession()
+        ChaportSDK.shared.setVisitorData(visitor: ChaportVisitorData(name: "Test SDK visitor"))
+    }
+    
+    private func updateUnreadLabel() {
+        let title = "Unread: \(unread)"
+        unreadButton.setTitle(title, for: .normal)
+        unreadButton.tintColor = unread > 0
+        ? UIColor.systemBlue
+        : UIColor(red: 0xCC / 255.0, green: 0xCC / 255.0, blue: 0xD0 / 255.0, alpha: 1.0)
+    }
+    
+    private func updateRemoveButtonColor() {
+        let color = ChaportSDK.shared.isChatVisible()
+            ? UIColor.systemBlue
+            : UIColor(red: 0xCC / 255.0, green: 0xCC / 255.0, blue: 0xD0 / 255.0, alpha: 1.0)
+
+        removeButton.tintColor = color
+    }
+}
+
+extension ViewController: ChaportSDKDelegate {
     func chatDidStart() {
         print("chatDidStart")
         
@@ -81,36 +111,5 @@ class ViewController: UIViewController, ChaportSDKDelegate {
     func linkDidClick(url: URL) -> ChaportLinkAction {
         print("Chat did click link: \(url)")
         return .allow
-//        UIApplication.shared.open(url, options: [:], completionHandler: nil)
-    }
-    
-    private func setup() {
-        var config = ChaportConfig(appId: "<appId>")
-
-        ChaportSDK.shared.delegate = self
-        ChaportSDK.shared.configure(config: config)
-        
-        setupVisitor()
-    }
-    
-    private func setupVisitor() {
-        ChaportSDK.shared.startSession()
-        ChaportSDK.shared.setVisitorData(visitor: ChaportVisitorData(name: "Test SDK visitor"))
-    }
-    
-    private func updateUnreadLabel() {
-        let title = "Unread: \(unread)"
-        unreadButton.setTitle(title, for: .normal)
-        unreadButton.tintColor = unread > 0
-        ? UIColor.systemBlue
-        : UIColor(red: 0xCC / 255.0, green: 0xCC / 255.0, blue: 0xD0 / 255.0, alpha: 1.0)
-    }
-    
-    private func updateRemoveButtonColor() {
-        let color = ChaportSDK.shared.isChatVisible()
-            ? UIColor.systemBlue
-            : UIColor(red: 0xCC / 255.0, green: 0xCC / 255.0, blue: 0xD0 / 255.0, alpha: 1.0)
-
-        removeButton.tintColor = color
     }
 }

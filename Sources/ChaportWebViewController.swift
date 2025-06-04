@@ -111,20 +111,6 @@ class ChaportWebViewController: UIViewController, WKScriptMessageHandler, WKNavi
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         delegate?.webViewDidFailToLoad?(error: error)
     }
-    
-    func webView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge,
-                 completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-
-        let protectionSpace = challenge.protectionSpace
-
-        if protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust,
-           let serverTrust = protectionSpace.serverTrust {
-            let credential = URLCredential(trust: serverTrust)
-            completionHandler(.useCredential, credential)
-        } else {
-            completionHandler(.performDefaultHandling, nil)
-        }
-    }
 
     override func loadView() {
         let contentController = WKUserContentController()
@@ -132,6 +118,8 @@ class ChaportWebViewController: UIViewController, WKScriptMessageHandler, WKNavi
         
         let config = WKWebViewConfiguration()
         config.userContentController = contentController
+        config.mediaTypesRequiringUserActionForPlayback = []
+        config.allowsInlineMediaPlayback = true
         
         let sdkVersion = ChaportSDK.version
         let iosVersion = UIDevice.current.systemVersion
@@ -163,35 +151,44 @@ class ChaportWebViewController: UIViewController, WKScriptMessageHandler, WKNavi
             return
         }
         
-//        print("loadWebView 3")
-        
-        guard let dataSource = self.dataSource else {
-            ChaportLogger.log("WebView data source is empty", level: .error)
-            completion(.failure(ChaportSDKError.webViewNotLoaded))
-            return
+        self.dataSource?.getTeamIdAsync() { _ in
+            guard let dataSource = self.dataSource else {
+                ChaportLogger.log("WebView data source is empty", level: .error)
+                completion(.failure(ChaportSDKError.webViewNotLoaded))
+                return
+            }
+
+            guard let webViewURL = dataSource.webViewURL else {
+                ChaportLogger.log("WebView URL is empty", level: .error)
+                completion(.failure(ChaportSDKError.webViewNotLoaded))
+                return
+            }
+            
+            self.isLoading = true
+            self.loadCompletions.append(completion)
+
+            self.loadViewIfNeeded()
+            self.webViewInstance.navigationDelegate = self
+            self.webViewInstance.isOpaque = false
+            self.webViewInstance.backgroundColor = .white
+            self.webViewInstance.scrollView.backgroundColor = .white
+
+            let request = URLRequest(url: webViewURL)
+            self.webViewInstance.load(request)
         }
-        
-//        print("loadWebView 4")
-        
-        guard let webViewURL = dataSource.webViewURL else {
-            ChaportLogger.log("WebView URL is empty", level: .error)
-            completion(.failure(ChaportSDKError.webViewNotLoaded))
-            return
-        }
-        
-//        print("loadWebView 5")
 
-        isLoading = true
-        loadCompletions.append(completion)
 
-        loadViewIfNeeded()
-        webViewInstance.navigationDelegate = self
-        webViewInstance.isOpaque = false
-        webViewInstance.backgroundColor = .white
-        webViewInstance.scrollView.backgroundColor = .white
-
-        let request = URLRequest(url: webViewURL)
-        webViewInstance.load(request)
+//        isLoading = true
+//        loadCompletions.append(completion)
+//
+//        loadViewIfNeeded()
+//        webViewInstance.navigationDelegate = self
+//        webViewInstance.isOpaque = false
+//        webViewInstance.backgroundColor = .white
+//        webViewInstance.scrollView.backgroundColor = .white
+//
+//        let request = URLRequest(url: webViewURL)
+//        webViewInstance.load(request)
         
 //        print("loadWebView end")
     }
