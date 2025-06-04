@@ -28,7 +28,7 @@ class ViewController: UIViewController {
         ChaportSDK.shared.embed(into: chat, parentViewController: self)
     }
     
-    @IBAction func stopSession(_ sender: UIButton) {
+    @IBAction func clearSession(_ sender: UIButton) {
         ChaportSDK.shared.stopSession() {
             self.setupVisitor()
         }
@@ -76,7 +76,7 @@ class ViewController: UIViewController {
 
 extension ViewController: ChaportSDKDelegate {
     func chatDidStart() {
-        print("chatDidStart")
+        print("Chat started")
         
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
             if granted {
@@ -90,26 +90,26 @@ extension ViewController: ChaportSDKDelegate {
     }
     
     func chatDidPresent() {
-        print("chatDidPresent")
+        print("Chat presented")
         self.updateRemoveButtonColor()
     }
     
     func chatDidDismiss() {
-        print("chatDidDismiss")
+        print("Chat dismissed")
         self.updateRemoveButtonColor()
     }
     
     func chatDidFail(error: Error) {
-        print("Chat did fail: \(error)")
+        print("Chat error: \(error)")
     }
     
     func unreadMessageDidChange(unreadCount: Int, lastMessage: String?) {
         unread = unreadCount
-        print("Chat unreadMessageDidChange, unreadCount: \(unreadCount), lastMessage: \(lastMessage ?? "")")
+        print("Unread message changed: unreadCount: \(unreadCount), lastMessage: \(lastMessage ?? "")")
     }
     
     func linkDidClick(url: URL) -> ChaportLinkAction {
-        print("Chat did click link: \(url)")
+        print("Link clicked: \(url)")
         return .allow
     }
 }

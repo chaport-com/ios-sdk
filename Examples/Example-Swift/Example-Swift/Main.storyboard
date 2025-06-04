@@ -42,7 +42,7 @@
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="filled" title="Clear session"/>
                                                 <connections>
-                                                    <action selector="stopSession:" destination="VC1" eventType="touchUpInside" id="V2Q-OH-t6L"/>
+                                                    <action selector="clearSession:" destination="VC1" eventType="touchUpInside" id="V2Q-OH-t6L"/>
                                                 </connections>
                                             </button>
                                         </subviews>

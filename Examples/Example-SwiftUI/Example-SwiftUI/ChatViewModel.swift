@@ -9,14 +9,13 @@ class ChatViewModel: NSObject, ObservableObject {
     weak var embedController: UIViewController?
     weak var chatContainer: UIView?
 
-
     override init() {
         super.init()
         
-        setupSDK()
+        setup()
     }
 
-    private func setupSDK() {
+    private func setup() {
         let config = ChaportConfig(appId: "<appId>")
 
         ChaportSDK.shared.delegate = self
@@ -32,9 +31,7 @@ class ChatViewModel: NSObject, ObservableObject {
 
     func clearSession() {
         ChaportSDK.shared.stopSession {
-            DispatchQueue.main.async {
-                self.setupVisitor()
-            }
+            self.setupVisitor()
         }
     }
 
@@ -62,18 +59,21 @@ class ChatViewModel: NSObject, ObservableObject {
 
 extension ChatViewModel: ChaportSDKDelegate {
     nonisolated func chatDidPresent() {
+        print("Chat presented")
         DispatchQueue.main.async {
             self.isChatVisible = true
         }
     }
 
     nonisolated func chatDidDismiss() {
+        print("Chat dismissed")
         DispatchQueue.main.async {
             self.isChatVisible = false
         }
     }
 
     nonisolated func unreadMessageDidChange(unreadCount: Int, lastMessage: String?) {
+        print("Unread message changed: unreadCount: \(unreadCount), lastMessage: \(lastMessage ?? "")")
         DispatchQueue.main.async {
             self.unreadCount = unreadCount
         }
@@ -81,6 +81,7 @@ extension ChatViewModel: ChaportSDKDelegate {
 
     nonisolated func chatDidStart() {
         print("Chat started")
+        
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
             if granted {
                 DispatchQueue.main.async {
@@ -93,11 +94,11 @@ extension ChatViewModel: ChaportSDKDelegate {
     }
 
     nonisolated func chatDidFail(error: Error) {
-        print("Chat failed: \(error.localizedDescription)")
+        print("Chat error: \(error)")
     }
 
     nonisolated func linkDidClick(url: URL) -> ChaportLinkAction {
-        print("Clicked link: \(url)")
+        print("Link clicked: \(url)")
         return .allow
     }
 }
