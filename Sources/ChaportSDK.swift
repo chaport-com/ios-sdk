@@ -28,7 +28,7 @@ public class ChaportSDK: NSObject {
 
     
     private var config: ChaportConfig?
-    private var userDetails: ChaportUserDetails?
+    private var userCredentials: ChaportUserCredentials?
     private var deviceToken: String?
     private var languageCode: String?
     private var startedBotId: String?
@@ -116,7 +116,7 @@ public class ChaportSDK: NSObject {
         return components.url
     }
     
-    public func configure(config: ChaportConfig) {
+    public func configure(with config: ChaportConfig) {
         if (self.config != nil && isSessionStarted()) {
             ChaportLogger.log("Unable to re-configure after session has already been started", level: .warning)
             return;
@@ -124,11 +124,11 @@ public class ChaportSDK: NSObject {
         self.config = config
     }
     
-    public func setLanguage(languageCode: String) {
+    public func setLanguage(_ languageCode: String) {
         self.languageCode = languageCode
     }
     
-    public func startSession(details: ChaportUserDetails? = nil) {
+    public func startSession(details: ChaportUserCredentials? = nil) {
         if isSessionStarted() {
             ChaportLogger.log("Session has already been started", level: .warning)
             return;
@@ -142,7 +142,7 @@ public class ChaportSDK: NSObject {
         self.ensureWebViewController()
         self.getTeamIdAsync() { _ in } // initialize teamId early
 
-        self.userDetails = details
+        self.userCredentials = details
         self._isSessionStarted = true
     }
     
@@ -163,6 +163,10 @@ public class ChaportSDK: NSObject {
                 
                 self.destroyWebView()
                 self._isSessionStarted = false
+                self.visitorData = nil
+                self.visitorDataHash = nil
+                self.startedBotId = nil
+                self.startedBotTimestamp = nil
                 completion()
             }
 
@@ -182,13 +186,13 @@ public class ChaportSDK: NSObject {
         }
     }
     
-    public func setVisitorData(visitor: ChaportVisitorData, hash: String? = nil) {
-        self.visitorData = visitor
+    public func setVisitorData(_ data: ChaportVisitorData, signedWith hash: String? = nil) {
+        self.visitorData = data
         self.visitorDataHash = hash
         
         // visitor data stored at self is sent automatically immediately after startSession is processed
         if webViewController?.isStartSessionProcessed == true {
-            webViewController?.setVisitorData(visitorData: visitor, hash: hash)
+            webViewController?.setVisitorData(visitorData: data, hash: hash)
         }
     }
     
@@ -311,12 +315,12 @@ public class ChaportSDK: NSObject {
         }
     }
     
-    public func setDeviceToken(deviceToken: String) {
+    public func setDeviceToken(_ deviceToken: String) {
         self.deviceToken = deviceToken
         webViewController?.setDeviceToken(token: deviceToken)
     }
     
-    public func isChaportPushNotification(notification: UNNotificationRequest) -> Bool {
+    public func isChaportPushNotification(_ notification: UNNotificationRequest) -> Bool {
         return notification.content.userInfo["operator"] != nil
     }
     
@@ -373,14 +377,14 @@ public class ChaportSDK: NSObject {
         return self._isSessionStarted;
     }
     
-    public func getUnreadMessage(completion: @escaping (Result<Any?, Error>) -> Void) {
+    public func fetchUnreadMessageInfo(completion: @escaping (Result<ChaportUnreadMessageInfo?, Error>) -> Void) {
         self.ensureWebViewLoaded() { webviewLoadResult in
             switch webviewLoadResult {
             case .success():
                 self.webViewController?.evaluateJavascriptWithResponse(message: ["action": "getUnreadMessage"]) { result in
                     switch result {
                     case .success(let value):
-                        completion(.success(value))
+                        completion(.success(ChaportUnreadMessageInfo(from: value)))
                     case .failure(let error):
                         completion(.failure(error))
                     }
@@ -685,7 +689,7 @@ extension ChaportSDK: ChaportWebViewDataSource {
     func restoreWebView(completion: @escaping (Result<Any?, Error>) -> Void) {
         var payload: [String: Any]? = nil
         
-        if let details = userDetails {
+        if let details = userCredentials {
             payload = ["id": details.id, "token": details.token]
         }
         

@@ -359,27 +359,4 @@ class ChaportWebViewController: UIViewController, WKScriptMessageHandler, WKNavi
         let message: [String: Any] = ["action": "openFAQ", "payload": ["article": articleSlug]]
         evaluateJavaScript(message: message) { _ in }
     }
-    
-    func getUnreadMessage(completion: @escaping (String?, Int) -> Void) {
-        let message: [String: Any] = ["action": "getUnreadMessage"]
-        evaluateJavaScript(message: message) { result in
-            switch result {
-            case .success(let value):
-                if let dict = value as? [String: Any], let count = dict["count"] as? Int {
-                    let lastMessage = dict["lastMessage"] as? String
-                    completion(lastMessage, count)
-                }
-            case .failure(_):
-                completion(nil, 0)
-            }
-        }
-    }
-    
-//    func startEvents() {
-////        isChatVisible = true
-//        for message in pendingMessages {
-//            evaluateJavaScript(message: message, completion: { _ in })
-//        }
-//        pendingMessages.removeAll()
-//    }
 }

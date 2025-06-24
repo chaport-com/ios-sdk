@@ -1,6 +1,6 @@
 import Foundation
 
-public struct ChaportUserDetails {
+public struct ChaportUserCredentials {
     public let id: String
     public let token: String
     
