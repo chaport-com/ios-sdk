@@ -1,9 +1,9 @@
 public struct ChaportOperator {
-    let id: String?
-    let name: String?
-    let image: String?
-    let colorId: Int?
-    let isBot: Bool?
+    public let id: String?
+    public let name: String?
+    public let image: String?
+    public let colorId: Int?
+    public let isBot: Bool?
 
     init?(from raw: Any) {
         guard let dict = raw as? [String: Any] else {
