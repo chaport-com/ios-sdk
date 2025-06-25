@@ -44,17 +44,15 @@ class ViewController: UIViewController {
     }
     
     private func setup() {
-        let config = ChaportConfig(appId: "<appId>")
-        
-        ChaportSDK.shared.delegate = self
-        ChaportSDK.shared.configure(config: config)
+        ChaportSDK.shared.setDelegate(self)
+        ChaportSDK.shared.configure(with: ChaportConfig(appId: "<appId>"))
         
         setupVisitor()
     }
     
     private func setupVisitor() {
         ChaportSDK.shared.startSession()
-        ChaportSDK.shared.setVisitorData(visitor: ChaportVisitorData(name: "Test SDK visitor"))
+        ChaportSDK.shared.setVisitorData(ChaportVisitorData(name: "Test SDK visitor"))
     }
     
     private func updateUnreadLabel() {
@@ -74,7 +72,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: ChaportSDKDelegate {
+extension ViewController: ChaportSDKDelegate, ChaportSDKSwiftDelegate {
     func chatDidStart() {
         print("Chat started")
         
@@ -103,9 +101,9 @@ extension ViewController: ChaportSDKDelegate {
         print("Chat error: \(error)")
     }
     
-    func unreadMessageDidChange(unreadCount: Int, lastMessage: String?) {
-        unread = unreadCount
-        print("Unread message changed: unreadCount: \(unreadCount), lastMessage: \(lastMessage ?? "")")
+    func unreadMessageDidChange(unreadInfo: ChaportUnreadMessageInfo) {
+        unread = unreadInfo.count
+        print("Unread message changed: \(unreadInfo)")
     }
     
     func linkDidClick(url: URL) -> ChaportLinkAction {

@@ -18,15 +18,15 @@ class ChatViewModel: NSObject, ObservableObject {
     private func setup() {
         let config = ChaportConfig(appId: "<appId>")
 
-        ChaportSDK.shared.delegate = self
-        ChaportSDK.shared.configure(config: config)
+        ChaportSDK.shared.setDelegate(self)
+        ChaportSDK.shared.configure(with: config)
         
         setupVisitor()
     }
     
     private func setupVisitor() {
         ChaportSDK.shared.startSession()
-        ChaportSDK.shared.setVisitorData(visitor: ChaportVisitorData(name: "Test SDK visitor"))
+        ChaportSDK.shared.setVisitorData(ChaportVisitorData(name: "Test SDK visitor"))
     }
 
     func clearSession() {

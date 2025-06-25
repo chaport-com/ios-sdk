@@ -12,7 +12,8 @@ public enum ChaportSDKError: Error {
 public class ChaportSDK: NSObject {
     @MainActor public static let shared = ChaportSDK()
     public static let version = "1.0.22"
-    public weak var delegate: ChaportSDKDelegate?
+    internal weak var delegate: ChaportSDKDelegate?
+    internal weak var swiftDelegate: ChaportSDKSwiftDelegate?
     private var _isSessionStarted: Bool = false
     private var _isChatPresented: Bool = false
     private var _isChatVisible: Bool = false {
@@ -116,6 +117,11 @@ public class ChaportSDK: NSObject {
         return components.url
     }
     
+    public func setDelegate(_ delegate: AnyObject) {
+        self.delegate = delegate as? ChaportSDKDelegate
+        self.swiftDelegate = delegate as? ChaportSDKSwiftDelegate
+    }
+    
     public func configure(with config: ChaportConfig) {
         if (self.config != nil && isSessionStarted()) {
             ChaportLogger.log("Unable to re-configure after session has already been started", level: .warning)
@@ -128,7 +134,7 @@ public class ChaportSDK: NSObject {
         self.languageCode = languageCode
     }
     
-    public func startSession(details: ChaportUserCredentials? = nil) {
+    public func startSession(userCredentials: ChaportUserCredentials? = nil) {
         if isSessionStarted() {
             ChaportLogger.log("Session has already been started", level: .warning)
             return;
@@ -142,7 +148,7 @@ public class ChaportSDK: NSObject {
         self.ensureWebViewController()
         self.getTeamIdAsync() { _ in } // initialize teamId early
 
-        self.userCredentials = details
+        self.userCredentials = userCredentials
         self._isSessionStarted = true
     }
     
@@ -384,7 +390,11 @@ public class ChaportSDK: NSObject {
                 self.webViewController?.evaluateJavascriptWithResponse(message: ["action": "getUnreadMessage"]) { result in
                     switch result {
                     case .success(let value):
-                        completion(.success(ChaportUnreadMessageInfo(from: value)))
+                        guard let unreadInfo = ChaportUnreadMessageInfo(from: value) else {
+                            completion(.failure(ChaportSDKError.invalidResponse))
+                            return
+                        }
+                        completion(.success(unreadInfo))
                     case .failure(let error):
                         completion(.failure(error))
                     }
@@ -650,9 +660,19 @@ extension ChaportSDK: ChaportWebViewControllerDelegate {
                     delegate?.chatDidFail?(error: error)
 
                 case "chat.unreadChange":
-                    if let count = data["count"] as? Int {
-                        let lastMessage = data["lastMessageText"] as? String
-                        delegate?.unreadMessageDidChange?(unreadCount: count, lastMessage: lastMessage)
+                    if let unreadInfo = ChaportUnreadMessageInfo(from: data) {
+                        // Swift delegate call (if implemented in Swift)
+                        swiftDelegate?.unreadMessageDidChange(unreadInfo: unreadInfo)
+                        
+                        // Objective-C compatible delegate call (if implemented in ObjC)
+                        delegate?.unreadMessageDidChange?(
+                            count: unreadInfo.count,
+                            lastMessageText: unreadInfo.lastMessageText,
+                            lastMessageAuthor: unreadInfo.lastMessageAuthor?.asDictionary as NSDictionary?,
+                            lastMessageAt: unreadInfo.lastMessageAt
+                        )
+                    } else {
+                        ChaportLogger.log("Received unreadChange event with malformed payload", level: .warning)
                     }
 
                 default:

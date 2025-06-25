@@ -14,6 +14,18 @@ public struct ChaportOperator {
         self.name = dict["name"] as? String
         self.image = dict["image"] as? String
         self.colorId = dict["colorId"] as? Int
-        self.isBot = dict["isBot"] as? Bool
+        self.isBot = dict["isBot"] as? Bool ?? false
+    }
+    
+    var asDictionary: [String: Any] {
+        var dict: [String: Any] = [
+            "isBot": isBot ?? false
+        ]
+
+        if let id = id { dict["id"] = id }
+        if let name = name { dict["name"] = name }
+        if let image = image { dict["image"] = image }
+        if let colorId = colorId { dict["colorId"] = colorId }
+        return dict
     }
 }
