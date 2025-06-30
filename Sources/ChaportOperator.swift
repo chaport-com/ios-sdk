@@ -5,7 +5,11 @@ public struct ChaportOperator {
     public let colorId: Int?
     public let isBot: Bool?
 
-    init?(from dict: [String: Any]) {
+    init?(from raw: Any) {
+        guard let dict = raw as? [String: Any] else {
+            return nil
+        }
+
         self.id = dict["id"] as? String
         self.name = dict["name"] as? String
         self.image = dict["image"] as? String

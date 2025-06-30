@@ -330,10 +330,10 @@ public class ChaportSDK: NSObject {
         return notification.content.userInfo["operator"] != nil
     }
     
-    public func handlePushNotification(_ notification: UNNotificationRequest) -> Bool {
+    public func handlePushNotification(_ notification: UNNotificationRequest) -> Void {
         guard let aps = notification.content.userInfo["aps"] as? [String: Any] else {
             ChaportLogger.log("Push notification payload missing 'aps' dictionary", level: .warning)
-            return false
+            return
         }
 
         let userInfo = notification.content.userInfo
@@ -358,7 +358,6 @@ public class ChaportSDK: NSObject {
         )
 
         self.emitUnreadMessageInfoChange(info: unreadInfo)
-        return true
     }
     
     public func startBot(botId: String) {
