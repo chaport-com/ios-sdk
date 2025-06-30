@@ -330,6 +330,37 @@ public class ChaportSDK: NSObject {
         return notification.content.userInfo["operator"] != nil
     }
     
+    public func handlePushNotification(_ notification: UNNotificationRequest) -> Bool {
+        guard let aps = notification.content.userInfo["aps"] as? [String: Any] else {
+            ChaportLogger.log("Push notification payload missing 'aps' dictionary", level: .warning)
+            return false
+        }
+
+        let userInfo = notification.content.userInfo
+
+        let badge = aps["badge"] as? Int ?? 0
+
+        let customPayload = userInfo as? [String: Any]
+        let operatorPayload = customPayload?["operator"] as? [String: Any]
+        let message = customPayload?["message"] as? String
+
+        let author = operatorPayload.flatMap { ChaportOperator(from: $0) }
+    
+        let timestamp = customPayload?["timestamp"] as? TimeInterval
+        let date = timestamp != nil ? Date(timeIntervalSince1970: timestamp!) : Date()
+
+
+        let unreadInfo = ChaportUnreadMessageInfo(
+            count: badge,
+            lastMessageText: message,
+            lastMessageAuthor: author,
+            lastMessageAt: date
+        )
+
+        self.emitUnreadMessageInfoChange(info: unreadInfo)
+        return true
+    }
+    
     public func startBot(botId: String) {
         if !isSessionStarted() {
             ChaportLogger.log("You must call startSession() before using startBot()", level: .warning)
@@ -444,6 +475,34 @@ public class ChaportSDK: NSObject {
     
     public func setLogLevel(level: ChaportLogLevel) {
         ChaportLogger.setLogLevel(level)
+    }
+    
+    private func emitUnreadMessageInfoChange(data: [String: Any]? = nil, info: ChaportUnreadMessageInfo? = nil) {
+        let unreadInfo: ChaportUnreadMessageInfo?
+
+        if let info = info {
+            unreadInfo = info
+        } else if let data = data {
+            unreadInfo = ChaportUnreadMessageInfo(from: data)
+        } else {
+            unreadInfo = nil
+        }
+
+        guard let unreadInfo else {
+            ChaportLogger.log("emitUnreadMessageInfoChange: received invalid input, either 'data' or 'info' is mandatory", level: .warning)
+            return
+        }
+
+        // Swift delegate call (if implemented in Swift)
+        swiftDelegate?.unreadMessageDidChange(unreadInfo: unreadInfo)
+        
+        // Objective-C compatible delegate call (if implemented in ObjC)
+        delegate?.unreadMessageDidChange?(
+            count: unreadInfo.count,
+            lastMessageText: unreadInfo.lastMessageText,
+            lastMessageAuthor: unreadInfo.lastMessageAuthor?.asDictionary as NSDictionary?,
+            lastMessageAt: unreadInfo.lastMessageAt
+        )
     }
     
     private func ensureWebViewController() {
@@ -660,20 +719,7 @@ extension ChaportSDK: ChaportWebViewControllerDelegate {
                     delegate?.chatDidFail?(error: error)
 
                 case "chat.unreadChange":
-                    if let unreadInfo = ChaportUnreadMessageInfo(from: data) {
-                        // Swift delegate call (if implemented in Swift)
-                        swiftDelegate?.unreadMessageDidChange(unreadInfo: unreadInfo)
-                        
-                        // Objective-C compatible delegate call (if implemented in ObjC)
-                        delegate?.unreadMessageDidChange?(
-                            count: unreadInfo.count,
-                            lastMessageText: unreadInfo.lastMessageText,
-                            lastMessageAuthor: unreadInfo.lastMessageAuthor?.asDictionary as NSDictionary?,
-                            lastMessageAt: unreadInfo.lastMessageAt
-                        )
-                    } else {
-                        ChaportLogger.log("Received unreadChange event with malformed payload", level: .warning)
-                    }
+                    self.emitUnreadMessageInfoChange(data: data)
 
                 default:
                     break

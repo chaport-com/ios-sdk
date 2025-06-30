@@ -5,6 +5,7 @@ public enum ChaportLogLevel: Int, Comparable {
     case info
     case warning
     case error
+    case none
 
     public var description: String {
         switch self {
@@ -12,6 +13,7 @@ public enum ChaportLogLevel: Int, Comparable {
         case .info: return "INFO"
         case .warning: return "WARNING"
         case .error: return "ERROR"
+        case .none: return "NONE";
         }
     }
 
