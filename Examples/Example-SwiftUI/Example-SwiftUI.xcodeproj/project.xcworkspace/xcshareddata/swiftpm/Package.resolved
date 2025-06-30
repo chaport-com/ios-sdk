@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/chaport-com/ios-sdk",
       "state" : {
-        "revision" : "8ff758e0ad01d23fb59dcfd94ee1c047add96f19",
-        "version" : "1.0.22"
+        "revision" : "ce33023a1063a337d3b21be0c880819553432351",
+        "version" : "1.0.23"
       }
     }
   ],
