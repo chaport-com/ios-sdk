@@ -21,7 +21,6 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let tokenString = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
-        print("setDeviceToken \(tokenString)")
         ChaportSDK.shared.setDeviceToken(tokenString)
     }
 
@@ -36,6 +35,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
         @escaping (UNNotificationPresentationOptions) -> Void
     ) {
         if ChaportSDK.shared.isChaportPushNotification(notification.request) {
+            ChaportSDK.shared.handlePushNotification(notification.request)
             if (ChaportSDK.shared.isChatVisible()) {
                 completionHandler([])
             } else {
