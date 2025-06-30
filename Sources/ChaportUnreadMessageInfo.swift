@@ -5,6 +5,18 @@ public struct ChaportUnreadMessageInfo {
     public let lastMessageAt: Date?
     public let lastMessageText: String?
     public let lastMessageAuthor: ChaportOperator?
+    
+    public init(
+        count: Int,
+        lastMessageText: String?,
+        lastMessageAuthor: ChaportOperator?,
+        lastMessageAt: Date
+    ) {
+        self.count = count
+        self.lastMessageText = lastMessageText
+        self.lastMessageAuthor = lastMessageAuthor
+        self.lastMessageAt = lastMessageAt
+    }
 
     init?(from raw: Any) {
         guard let dict = raw as? [String: Any] else {

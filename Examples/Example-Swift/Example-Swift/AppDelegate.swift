@@ -10,15 +10,26 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
         
         window = UIWindow(frame: UIScreen.main.bounds)
 
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
 
-            guard let rootVC = storyboard.instantiateInitialViewController() else {
-                fatalError("Не удалось загрузить Initial View Controller из Main.storyboard")
+        guard let rootVC = storyboard.instantiateInitialViewController() else {
+            fatalError("Не удалось загрузить Initial View Controller из Main.storyboard")
+        }
+
+        window?.rootViewController = rootVC
+        window?.makeKeyAndVisible()
+        
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            guard settings.authorizationStatus == .authorized else {
+                // Push not authorized yet, skipping device token registration
+                return
             }
 
-            window?.rootViewController = rootVC
-            window?.makeKeyAndVisible()
-        
+            DispatchQueue.main.async {
+                UIApplication.shared.registerForRemoteNotifications()
+            }
+        }
+    
         return true
     }
     
@@ -38,6 +49,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
         @escaping (UNNotificationPresentationOptions) -> Void
     ) {
         if ChaportSDK.shared.isChaportPushNotification(notification.request) {
+            ChaportSDK.shared.handlePushNotification(notification.request)
             if (ChaportSDK.shared.isChatVisible()) {
                 completionHandler([])
             } else {

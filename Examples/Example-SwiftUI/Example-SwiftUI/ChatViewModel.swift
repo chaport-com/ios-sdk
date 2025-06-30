@@ -72,10 +72,10 @@ extension ChatViewModel: ChaportSDKDelegate {
         }
     }
 
-    nonisolated func unreadMessageDidChange(unreadCount: Int, lastMessage: String?) {
-        print("Unread message changed: unreadCount: \(unreadCount), lastMessage: \(lastMessage ?? "")")
+    nonisolated func unreadMessageDidChange(unreadInfo: ChaportUnreadMessageInfo) {
+        print("Unread message changed: \(unreadInfo)")
         DispatchQueue.main.async {
-            self.unreadCount = unreadCount
+            self.unreadCount = unreadInfo.count
         }
     }
 

@@ -4,6 +4,18 @@ import Chaport
 class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         UNUserNotificationCenter.current().delegate = self
+        
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            guard settings.authorizationStatus == .authorized else {
+                // Push not authorized yet, skipping device token registration
+                return
+            }
+
+            DispatchQueue.main.async {
+                UIApplication.shared.registerForRemoteNotifications()
+            }
+        }
+
         return true
     }
     
@@ -23,6 +35,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
         @escaping (UNNotificationPresentationOptions) -> Void
     ) {
         if ChaportSDK.shared.isChaportPushNotification(notification.request) {
+            ChaportSDK.shared.handlePushNotification(notification.request)
             if (ChaportSDK.shared.isChatVisible()) {
                 completionHandler([])
             } else {
