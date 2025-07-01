@@ -53,6 +53,18 @@ class ViewController: UIViewController {
     private func setupVisitor() {
         ChaportSDK.shared.startSession()
         ChaportSDK.shared.setVisitorData(ChaportVisitorData(name: "Test SDK visitor"))
+        
+        ChaportSDK.shared.fetchUnreadMessageInfo() { result in
+            switch result {
+            case .success(let unreadInfo):
+                DispatchQueue.main.async {
+                    self.unread = unreadInfo.count
+                    self.updateUnreadLabel()
+                }
+            case .failure(let error):
+                self.chatDidFail(error: error)
+            }
+        }
     }
     
     private func updateUnreadLabel() {

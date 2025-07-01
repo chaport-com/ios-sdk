@@ -1,0 +1,17 @@
+{
+  "aps": {
+    "alert": {
+      "title": "New message",
+      "body": "Test operator: Test message"
+    },
+    "sound": "default",
+    "badge": 3
+  },
+  "operator": {
+    "id": "000011112222333344445555",
+    "name": "Test operator",
+    "image": "https://assets.chaport.com/images/user-icon-240x.png"
+  },
+  "message": "Test message",
+  "timestamp": 1751361687
+}
