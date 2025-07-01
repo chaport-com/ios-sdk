@@ -27,6 +27,17 @@ class ChatViewModel: NSObject, ObservableObject {
     private func setupVisitor() {
         ChaportSDK.shared.startSession()
         ChaportSDK.shared.setVisitorData(ChaportVisitorData(name: "Test SDK visitor"))
+        
+        ChaportSDK.shared.fetchUnreadMessageInfo() { result in
+            switch result {
+            case .success(let unreadInfo):
+                DispatchQueue.main.async {
+                    self.unreadCount = unreadInfo.count
+                }
+            case .failure(let error):
+                self.chatDidFail(error: error)
+            }
+        }
     }
 
     func clearSession() {
@@ -57,7 +68,7 @@ class ChatViewModel: NSObject, ObservableObject {
     }
 }
 
-extension ChatViewModel: ChaportSDKDelegate {
+extension ChatViewModel: ChaportSDKDelegate, ChaportSDKSwiftDelegate {
     nonisolated func chatDidPresent() {
         print("Chat presented")
         DispatchQueue.main.async {

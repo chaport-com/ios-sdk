@@ -349,7 +349,21 @@ public class ChaportSDK: NSObject {
         let timestamp = customPayload?["timestamp"] as? TimeInterval
         let date = timestamp != nil ? Date(timeIntervalSince1970: timestamp!) : Date()
 
+        // if webview is currently loaded, push data might be obsolete and requesting up-to-date data is cheap
+        if self.webViewController != nil {
+            self.fetchUnreadMessageInfo() { result in
+                switch result {
+                case .success(let value):
+                    self.emitUnreadMessageInfoChange(info: value)
+                case .failure(let error):
+                    self.delegate?.chatDidFail?(error: error)
+                }
+            }
+            
+            return
+        }
 
+        // webview is not loaded, it should be safe to use the data from push as is
         let unreadInfo = ChaportUnreadMessageInfo(
             count: badge,
             lastMessageText: message,
@@ -413,7 +427,7 @@ public class ChaportSDK: NSObject {
         return self._isSessionStarted;
     }
     
-    public func fetchUnreadMessageInfo(completion: @escaping (Result<ChaportUnreadMessageInfo?, Error>) -> Void) {
+    public func fetchUnreadMessageInfo(completion: @escaping (Result<ChaportUnreadMessageInfo, Error>) -> Void) {
         self.ensureWebViewLoaded() { webviewLoadResult in
             switch webviewLoadResult {
             case .success():
