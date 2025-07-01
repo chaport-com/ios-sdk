@@ -1,5 +1,28 @@
 # Chaport Live Chat SDK for iOS
 
+## Table of Contents
+
+- [Requirements](#requirements)
+- [Installation](#installation)
+  - [Using CocoaPods](#using-cocoapods)
+  - [Using Swift Package Manager](#using-swift-package-manager)
+  - [Manual installation](#manual-installation)
+- [Integration](#integration)
+  - [Initialization](#initialize-chaport-sdk)
+  - [Chat presentation](#present-the-chat)
+  - [Info.plist configuration](#update-your-infoplist)
+  - [Push notifications](#implement-push-notifications-optional)
+  - [App whitelisting](#enable-application-whitelisting-optional)
+- [SDK API](#sdk-api)
+  - [Global configuration](#global-configuration)
+  - [Session configuration](#session-configuration)
+  - [Session management](#session-management)
+  - [Custom bots](#custom-bots)
+  - [FAQ](#faq)
+  - [Push notifications & unread messages](#push-notifications--unread-messages)
+  - [Delegate and events](#delegate-and-events)
+- [Example apps](#example-apps)
+
 ## Requirements
 
 * iOS 15.6+
@@ -8,9 +31,7 @@
 
 ## Installation
 
-### 1. Install Chaport Live Chat SDK to your iOS app
-
-#### 1.1 Using Cocoapods
+### Using Cocoapods
 
 Add Chaport to your Podfile like this:
 
@@ -26,37 +47,30 @@ Then run `pod install`.
 
 See [Example-Swift](Examples/Example-Swift/) app for a CocoaPods example.
 
-#### 1.2 Using Swift Package Manager
+### Using Swift Package Manager
 
-1. Open `File` → `Add Package Dependencies...`.
-2. Enter `https://github.com/chaport-com/ios-sdk` in a search input and press `Enter`.
+1. In Xcode, go to `File` → `Add Package Dependencies...`.
+2. Paste `https://github.com/chaport-com/ios-sdk` into the search bar and press `Enter`.
 3. Select the `ios-sdk` package and click the `Add package` button.
-4. Click the `Add package` button again.
+4. In the next dialog, confirm by clicking `Add Package` again.
 
 See [Example-SwiftUI](Examples/Example-SwiftUI/) app for an SPM example.
 
-#### 1.3 Manually
+### Manual installation
 
-##### Swift
+#### Swift
 
-Simply copy files from Sources directory into your project.
+Copy the contents of the [Sources/](Sources/) directory into your project. Make sure the files are included in your app target.
 
-##### Objective-C
+#### Objective-C
 
 TBD
 
-### 2. Update your Info.plist
+## Integration
 
-To enable your users to take and upload photos to the chat as well as download photos to their photo library, add these properties to your Info.plist file:
+TBD retrieve appId from Chaport app
 
-* `Privacy - Camera Usage Description` [NSCameraUsageDescription](https://developer.apple.com/documentation/bundleresources/information-property-list/nscamerausagedescription)
-* `Privacy - Photo Library Usage Description` [NSPhotoLibraryUsageDescription](https://developer.apple.com/documentation/bundleresources/information-property-list/nsphotolibraryusagedescription) or `Privacy - Photo Library Additions Usage Description` [NSPhotoLibraryAddUsageDescription](https://developer.apple.com/documentation/bundleresources/information-property-list/nsphotolibraryaddusagedescription)
-
-### 3. Configure Chaport Live Chat SDK (Optional or Required?)
-
-TBD retrieve appId, configure and present/embed examples
-
-#### Initialize Chaport SDK
+### Initialize Chaport SDK
 
 ```
 import Chaport
@@ -65,7 +79,7 @@ ChaportSDK.shared.configure(with: ChaportConfig(appId: "your_app_id"))
 ChaportSDK.shared.startSession()
 ```
 
-#### Present chat
+### Present the chat
 
 Present the chat in a modal view:
 
@@ -79,23 +93,28 @@ Embed the chat into your own view hierarchy:
 ChaportSDK.shared.embed(into: chatContainerView, parentViewController: self)
 ```
 
-### 4. Implement Push Notifications (Optional)
+### Update your Info.plist
+
+To enable your users to take and upload photos to the chat as well as download photos to their photo library, add these properties to your Info.plist file:
+
+* `Privacy - Camera Usage Description` [NSCameraUsageDescription](https://developer.apple.com/documentation/bundleresources/information-property-list/nscamerausagedescription)
+* `Privacy - Photo Library Usage Description` [NSPhotoLibraryUsageDescription](https://developer.apple.com/documentation/bundleresources/information-property-list/nsphotolibraryusagedescription) or `Privacy - Photo Library Additions Usage Description` [NSPhotoLibraryAddUsageDescription](https://developer.apple.com/documentation/bundleresources/information-property-list/nsphotolibraryaddusagedescription)
+
+### Implement push notifications (optional)
 
 TBD instruct how to get bundle and team ids, key id and the key itself
 TBD instruct how set up iOS SDK in Chaport app
 
-#### 4.1 Enable Push Notification Capability in Xcode project
+#### Enable Push Notification Capability in Xcode
 
 1. Open your project in Xcode.
 2. Select your target.
 3. Go to the "Signing & Capabilities" tab.
-4. Click the "+" button and add "Push Notifications".
+4. Click the "+ Capability" button and add "Push Notifications".
 
-#### 4.2 Update your application
+#### Register the device for push notifications
 
-1. Register the device
-
-This example registers user's device during the app launch:
+You can register for notifications at app launch:
 
 ```
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -109,7 +128,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 }
 ```
 
-If you'd like to postpone requesting the notification permission until user contacts you using the chat, you can request it within ChaportSDKDelegate chatDidStart method like this:
+Alternatively, delay permission request until the [chat starts](#example-delegate-implementation):
 
 ```
 func chatDidStart() {
@@ -123,7 +142,28 @@ func chatDidStart() {
 }
 ```
 
-2. Pass the device token to Chaport
+In this case, remember to check and reuse an existing permission on startup:
+
+```
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    UNUserNotificationCenter.current().delegate = self
+    
+    UNUserNotificationCenter.current().getNotificationSettings { settings in
+        guard settings.authorizationStatus == .authorized else {
+            // Push not authorized yet, skipping device token registration
+            return
+        }
+
+        DispatchQueue.main.async {
+            UIApplication.shared.registerForRemoteNotifications()
+        }
+    }
+
+    return true
+}
+```
+
+#### Pass the device token to Chaport
 
 ```
 import Chaport
@@ -134,7 +174,7 @@ func application(_ application: UIApplication, didRegisterForRemoteNotifications
 }
 ```
 
-3. Handle notifications
+#### Handle incoming notifications
 
 ```
 func userNotificationCenter(
@@ -144,6 +184,7 @@ func userNotificationCenter(
   @escaping (UNNotificationPresentationOptions) -> Void
 ) {
   if ChaportSDK.shared.isChaportPushNotification(notification.request) {
+    ChaportSDK.shared.handlePushNotification(notification.request)
     if (ChaportSDK.shared.isChatVisible()) {
       completionHandler([])
     } else {
@@ -154,7 +195,11 @@ func userNotificationCenter(
     completionHandler([])
   }
 }
+```
 
+Open the chat when user taps on a notification:
+
+```
 func userNotificationCenter(
   _ center: UNUserNotificationCenter,
   didReceive response: UNNotificationResponse,
@@ -171,6 +216,16 @@ func userNotificationCenter(
   completionHandler()
 }
 ```
+
+### Enable application whitelisting (optional)
+
+By default, the Chaport SDK can be initialized with any valid appId. While this setup is flexible and simplifies onboarding, you may request that we restrict SDK usage to a list of approved applications for your account.
+
+This optional restriction helps prevent unauthorized use of your appId in third-party apps.
+
+To use this feature:
+1. Go to [Settings → Integrations](https://app.chaport.com/#/settings/integrations), select `Mobile SDK` and connect your iOS applications.
+2. Contact our support to enable application whitelisting for your account.
 
 ## SDK API
 
@@ -211,9 +266,13 @@ Session configuration defines values specific to an individual app user. These s
 
 ##### setVisitorData
 
+```
+ChaportSDK.shared.setVisitorData(ChaportVisitorData(name: "Test SDK visitor", email: "test@email.com"))
+```
+
 ##### setLanguage
 
-By default, language is selected based on the device preference. You can use this method to override the default.
+By default, language is selected based on the device preference. You can use this method to override the default. Check out [the available languages](https://www.chaport.com/help/general/what-languages-are-supported-by-chaport).
 
 ```
 ChaportSDK.shared.setLanguage("en")
@@ -303,17 +362,17 @@ Returns a **Boolean** indicating whether the chat is currently `embed`ded.
 
 Returns a **Boolean** indicating whether the chat is currently either `present`ed or `embed`ded.
 
-### Custom Bots
+### Custom bots
 
 The Chaport SDK allows you to trigger custom bots manually using their unique identifier. However, custom bots are subject to specific conditions that determine whether they can be started. These constraints help avoid unexpected behavior and ensure bots don’t interrupt active conversations or repeat unnecessarily.
 
 A custom bot can only be started if both of the following conditions are met:
 
 1. No chat is currently active
-  The user must not already be engaged in an active chat — whether that's a session with an operator or another bot.
+     The user must not already be engaged in an active chat — whether that's a session with an operator or another bot.
 
 2. Bot has not already been completed (if "Once per user" enabled)
-  If the targeted bot has the “Once per user” flag enabled, it can only be finished once per user. Repeated attempts will be ignored unless the bot was never completed.
+     If the targeted bot has the “Once per user” flag enabled, it can only be finished once per user. Repeated attempts will be ignored unless the bot was never completed.
 
 #### canStartBot
 
@@ -414,6 +473,7 @@ ChaportSDK.shared.setDelegate(self)
 
 ```
 extension ViewController: ChaportSDKDelegate, ChaportSDKSwiftDelegate {
+  /// Called when a new chat session is started
   func chatDidStart() {
     print("Chat started")
     
@@ -428,22 +488,27 @@ extension ViewController: ChaportSDKDelegate, ChaportSDKSwiftDelegate {
     }
   }
   
+  /// Called when a chat widget is presented or embedded within a view
   func chatDidPresent() {
     print("Chat presented")
   }
   
+  /// Called when a chat widget is dismissed or removed from the view
   func chatDidDismiss() {
     print("Chat dismissed")
   }
   
+  /// Called when SDK detects an error
   func chatDidFail(error: Error) {
     print("Chat error: \(error)")
   }
   
+  /// Called when unread message information changes
   func unreadMessageDidChange(unreadInfo: ChaportUnreadMessageInfo) {
     print("Unread message changed: \(unreadInfo)")
   }
   
+  /// Called when a user clicks an external link in chat, by default links are opened in external browser
   func linkDidClick(url: URL) -> ChaportLinkAction {
     print("Link clicked: \(url)")
     return .allow
@@ -453,4 +518,4 @@ extension ViewController: ChaportSDKDelegate, ChaportSDKSwiftDelegate {
 
 ## Example apps
 
-You can find sample UIKit and SwiftUI applications in the `Examples/` directory.
+You can find sample UIKit and SwiftUI applications in the [Examples/](Examples/) directory.
