@@ -4,13 +4,13 @@
 
 - [Requirements](#requirements)
 - [Installation](#installation)
-  - [Using CocoaPods](#11-using-cocoapods)
-  - [Using Swift Package Manager](#12-using-swift-package-manager)
-  - [Manual installation](#13-manual-installation)
-- [Info.plist configuration](#2-update-your-infoplist)
-- [SDK integration](#3-integrate-the-chaport-SDK)
+  - [Using CocoaPods](#using-cocoapods)
+  - [Using Swift Package Manager](#using-swift-package-manager)
+  - [Manual installation](#manual-installation)
+- [Integration](#integration)
   - [Initialization](#initialize-chaport-sdk)
-  - [Chat presentation](#present-chat)
+  - [Chat presentation](#present-the-chat)
+  - [Info.plist configuration](#update-your-infoplist)
   - [Push notifications](#implement-push-notifications-optional)
   - [App whitelisting](#enable-application-whitelisting-optional)
 - [SDK API](#sdk-api)
@@ -31,9 +31,7 @@
 
 ## Installation
 
-### 1. Install Chaport Live Chat SDK to your iOS app
-
-#### 1.1 Using Cocoapods
+### Using Cocoapods
 
 Add Chaport to your Podfile like this:
 
@@ -49,37 +47,30 @@ Then run `pod install`.
 
 See [Example-Swift](Examples/Example-Swift/) app for a CocoaPods example.
 
-#### 1.2 Using Swift Package Manager
+### Using Swift Package Manager
 
-1. Open `File` → `Add Package Dependencies...`.
-2. Enter `https://github.com/chaport-com/ios-sdk` in a search input and press `Enter`.
+1. In Xcode, go to `File` → `Add Package Dependencies...`.
+2. Paste `https://github.com/chaport-com/ios-sdk` into the search bar and press `Enter`.
 3. Select the `ios-sdk` package and click the `Add package` button.
-4. Click the `Add package` button again.
+4. In the next dialog, confirm by clicking `Add Package` again.
 
 See [Example-SwiftUI](Examples/Example-SwiftUI/) app for an SPM example.
 
-#### 1.3 Manual installation
+### Manual installation
 
-##### Swift
+#### Swift
 
-Simply copy files from Sources directory into your project.
+Copy the contents of the [Sources/](Sources/) directory into your project. Make sure the files are included in your app target.
 
-##### Objective-C
+#### Objective-C
 
 TBD
 
-### 2. Update your Info.plist
+## Integration
 
-To enable your users to take and upload photos to the chat as well as download photos to their photo library, add these properties to your Info.plist file:
+TBD retrieve appId from Chaport app
 
-* `Privacy - Camera Usage Description` [NSCameraUsageDescription](https://developer.apple.com/documentation/bundleresources/information-property-list/nscamerausagedescription)
-* `Privacy - Photo Library Usage Description` [NSPhotoLibraryUsageDescription](https://developer.apple.com/documentation/bundleresources/information-property-list/nsphotolibraryusagedescription) or `Privacy - Photo Library Additions Usage Description` [NSPhotoLibraryAddUsageDescription](https://developer.apple.com/documentation/bundleresources/information-property-list/nsphotolibraryaddusagedescription)
-
-### 3. Integrate the Chaport SDK
-
-TBD retrieve appId
-
-#### Initialize Chaport SDK
+### Initialize Chaport SDK
 
 ```
 import Chaport
@@ -88,7 +79,7 @@ ChaportSDK.shared.configure(with: ChaportConfig(appId: "your_app_id"))
 ChaportSDK.shared.startSession()
 ```
 
-#### Present chat
+### Present the chat
 
 Present the chat in a modal view:
 
@@ -102,23 +93,28 @@ Embed the chat into your own view hierarchy:
 ChaportSDK.shared.embed(into: chatContainerView, parentViewController: self)
 ```
 
-#### Implement push notifications (Optional)
+### Update your Info.plist
+
+To enable your users to take and upload photos to the chat as well as download photos to their photo library, add these properties to your Info.plist file:
+
+* `Privacy - Camera Usage Description` [NSCameraUsageDescription](https://developer.apple.com/documentation/bundleresources/information-property-list/nscamerausagedescription)
+* `Privacy - Photo Library Usage Description` [NSPhotoLibraryUsageDescription](https://developer.apple.com/documentation/bundleresources/information-property-list/nsphotolibraryusagedescription) or `Privacy - Photo Library Additions Usage Description` [NSPhotoLibraryAddUsageDescription](https://developer.apple.com/documentation/bundleresources/information-property-list/nsphotolibraryaddusagedescription)
+
+### Implement push notifications (optional)
 
 TBD instruct how to get bundle and team ids, key id and the key itself
 TBD instruct how set up iOS SDK in Chaport app
 
-##### Enable Push Notification Capability in Xcode project
+#### Enable Push Notification Capability in Xcode
 
 1. Open your project in Xcode.
 2. Select your target.
 3. Go to the "Signing & Capabilities" tab.
-4. Click the "+" button and add "Push Notifications".
+4. Click the "+ Capability" button and add "Push Notifications".
 
-##### Update your application
+#### Register the device for push notifications
 
-1. Register the device
-
-This example registers user's device during the app launch:
+You can register for notifications at app launch:
 
 ```
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -132,7 +128,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 }
 ```
 
-If you'd like to postpone requesting the notification permission until user contacts you using the chat, you can request it within ChaportSDKDelegate chatDidStart method like this:
+Alternatively, delay permission request until the [chat starts](#example-delegate-implementation):
 
 ```
 func chatDidStart() {
@@ -144,8 +140,11 @@ func chatDidStart() {
     }
   }
 }
+```
 
-// make sure to check for existing permission on startup to pass the token if it is available
+In this case, remember to check and reuse an existing permission on startup:
+
+```
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     UNUserNotificationCenter.current().delegate = self
     
@@ -164,7 +163,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 }
 ```
 
-2. Pass the device token to Chaport
+#### Pass the device token to Chaport
 
 ```
 import Chaport
@@ -175,7 +174,7 @@ func application(_ application: UIApplication, didRegisterForRemoteNotifications
 }
 ```
 
-3. Handle notifications
+#### Handle incoming notifications
 
 ```
 func userNotificationCenter(
@@ -196,7 +195,11 @@ func userNotificationCenter(
     completionHandler([])
   }
 }
+```
 
+Open the chat when user taps on a notification:
+
+```
 func userNotificationCenter(
   _ center: UNUserNotificationCenter,
   didReceive response: UNNotificationResponse,
@@ -214,7 +217,7 @@ func userNotificationCenter(
 }
 ```
 
-#### Enable application whitelisting (Optional)
+### Enable application whitelisting (optional)
 
 By default, the Chaport SDK can be initialized with any valid appId. While this setup is flexible and simplifies onboarding, you may request that we restrict SDK usage to a list of approved applications for your account.
 
@@ -515,4 +518,4 @@ extension ViewController: ChaportSDKDelegate, ChaportSDKSwiftDelegate {
 
 ## Example apps
 
-You can find sample UIKit and SwiftUI applications in the `Examples/` directory.
+You can find sample UIKit and SwiftUI applications in the [Examples/](Examples/) directory.
