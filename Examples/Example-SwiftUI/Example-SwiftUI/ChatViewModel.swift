@@ -86,6 +86,7 @@ extension ChatViewModel: ChaportSDKDelegate, ChaportSDKSwiftDelegate {
     nonisolated func unreadMessageDidChange(unreadInfo: ChaportUnreadMessageInfo) {
         print("Unread message changed: \(unreadInfo)")
         DispatchQueue.main.async {
+            UIApplication.shared.applicationIconBadgeNumber = unreadInfo.count
             self.unreadCount = unreadInfo.count
         }
     }

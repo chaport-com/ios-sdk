@@ -1,9 +1,17 @@
-public struct ChaportOperator {
+public struct ChaportOperator: Equatable {
     public let id: String?
     public let name: String?
     public let image: String?
     public let colorId: Int?
     public let isBot: Bool?
+    
+    public static func == (lhs: ChaportOperator, rhs: ChaportOperator) -> Bool {
+        guard let leftId = lhs.id, let rightId = rhs.id else {
+            // Treat any nil (even both nil) as not equal
+            return false
+        }
+        return leftId == rightId
+    }
 
     init?(from raw: Any) {
         guard let dict = raw as? [String: Any] else {

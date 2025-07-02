@@ -40,6 +40,9 @@ public class ChaportSDK: NSObject {
     private var webViewController: ChaportWebViewController?
     private var webViewInactivityTimer: Timer?
     
+    private var lastEmittedUnreadInfo: ChaportUnreadMessageInfo?
+    private let emitLock = DispatchQueue(label: "com.chaport.chaportsdk.emitUnreadInfo.lock")
+    
     internal var webViewURL: URL? {
         guard let config = config else { return nil }
         let domain: String
@@ -503,6 +506,22 @@ public class ChaportSDK: NSObject {
 
         guard let unreadInfo else {
             ChaportLogger.log("emitUnreadMessageInfoChange: received invalid input, either 'data' or 'info' is mandatory", level: .warning)
+            return
+        }
+        
+        var isDuplicate = false
+
+        // Atomic access to lastEmittedUnreadInfo
+        emitLock.sync {
+            if let last = lastEmittedUnreadInfo, last == unreadInfo {
+                isDuplicate = true
+            } else {
+                lastEmittedUnreadInfo = unreadInfo
+            }
+        }
+        
+        guard !isDuplicate else {
+            ChaportLogger.log("emitUnreadMessageInfoChange: skipped duplicate emit", level: .debug)
             return
         }
 

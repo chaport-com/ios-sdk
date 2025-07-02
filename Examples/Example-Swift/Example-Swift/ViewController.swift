@@ -115,6 +115,7 @@ extension ViewController: ChaportSDKDelegate, ChaportSDKSwiftDelegate {
     
     func unreadMessageDidChange(unreadInfo: ChaportUnreadMessageInfo) {
         unread = unreadInfo.count
+        UIApplication.shared.applicationIconBadgeNumber = unreadInfo.count
         print("Unread message changed: \(unreadInfo)")
     }
     

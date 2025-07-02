@@ -1,6 +1,6 @@
 import Foundation
 
-public struct ChaportUnreadMessageInfo {
+public struct ChaportUnreadMessageInfo: Equatable {
     public let count: Int
     public let lastMessageAt: Date?
     public let lastMessageText: String?
