@@ -1,5 +1,5 @@
 PODS:
-  - Chaport (1.0.24)
+  - Chaport (1.0.25)
 
 DEPENDENCIES:
   - Chaport (~> 1.0)
@@ -9,7 +9,7 @@ SPEC REPOS:
     - Chaport
 
 SPEC CHECKSUMS:
-  Chaport: 9b0211636409cd57d78ac07d19bfc7817172c1a6
+  Chaport: 9027fe0a8b3a86b587d9c0c2e9b948e6b742e60e
 
 PODFILE CHECKSUM: d76ebce35a9a6d1ae36a7300932a4e321692b726
 
