@@ -11,7 +11,7 @@ public enum ChaportSDKError: Error {
 
 public class ChaportSDK: NSObject {
     @MainActor public static let shared = ChaportSDK()
-    public static let version = "1.0.25"
+    public static let version = "1.0.26"
     internal weak var delegate: ChaportSDKDelegate?
     internal weak var swiftDelegate: ChaportSDKSwiftDelegate?
     private var _isSessionStarted: Bool = false
