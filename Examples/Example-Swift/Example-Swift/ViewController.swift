@@ -36,7 +36,9 @@ class ViewController: UIViewController {
     
     @IBAction func openFAQ(_ sender: UIButton) {
         ChaportSDK.shared.embed(into: chat, parentViewController: self)
-        ChaportSDK.shared.openFAQ()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            ChaportSDK.shared.openFAQ()
+        }
     }
     
     @IBAction func remove(_ sender: UIButton) {

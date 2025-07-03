@@ -60,7 +60,9 @@ class ChatViewModel: NSObject, ObservableObject {
 
     func openFAQ() {
         embedChat()
-        ChaportSDK.shared.openFAQ()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            ChaportSDK.shared.openFAQ()
+        }
     }
 
     func removeChat() {
