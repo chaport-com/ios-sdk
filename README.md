@@ -369,9 +369,11 @@ The Chaport SDK allows you to trigger custom bots manually using their unique id
 A custom bot can only be started if both of the following conditions are met:
 
 1. No chat is currently active
+
      The user must not already be engaged in an active chat — whether that's a session with an operator or another bot.
 
 2. Bot has not already been completed (if "Once per user" enabled)
+
      If the targeted bot has the “Once per user” flag enabled, it can only be finished once per user. Repeated attempts will be ignored unless the bot was never completed.
 
 #### canStartBot
